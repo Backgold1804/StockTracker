@@ -1,3 +1,17 @@
-<resources>
-    <string name="app_name">Stock Tracker</string>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_name">TestLogin</string>
+    <string name="login_text">로그인</string>
+    <string name="id">ID</string>
+    <string name="password">Password</string>
+    <string name="join">회원가입</string>
+    <string name="find_id">아이디 찾기</string>
+    <string name="find_password">비밀번호 찾기</string>
+    <string name="password_text">비밀번호</string>
+    <string name="password_check_text">비밀번호 확인</string>
+    <string name="phone">핸드폰번호</string>
+    <string name="find_id_phrase">아이디찾기문구</string>
+    <string name="find_id_phrase_ex">ex)나의아이디</string>
+    <string name="nickname">닉네임</string>
+
 </resources>
