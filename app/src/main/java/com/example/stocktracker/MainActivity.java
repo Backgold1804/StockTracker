@@ -8,6 +8,7 @@ import android.os.Handler;
 
 import com.example.stocktracker.Login.LoginActivity;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
