@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.stocktracker.R;
+
 public class M1RVadapter extends RecyclerView.Adapter<M1RVadapter.ViewHolder> {
 
     private com.example.stocktracker.Home.Data mData;
@@ -44,7 +46,7 @@ public class M1RVadapter extends RecyclerView.Adapter<M1RVadapter.ViewHolder> {
         }
     }
 
-    public M1RVadapter(Context context, com.example.testmain.Data Data){
+    public M1RVadapter(Context context, Data Data){
         this.mData = Data;
     }
 

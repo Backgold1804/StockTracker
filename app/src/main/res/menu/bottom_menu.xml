@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/table_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_table_chart_24"
+        android:title="Table" />
+
+    <item
+        android:id="@+id/friend_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Friend" />
+</menu>
