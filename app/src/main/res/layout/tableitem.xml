@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/ticker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+
+                <TextView
+                    android:id="@+id/current_price"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/average_unit_price"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/profit_rate"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textSize="14sp" /><![CDATA[/>
+
+                ]]>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="35dp">
+
+                <TextView
+                    android:id="@+id/holding_quantity"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/yesterday_price"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/profit"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:gravity="center"
+                    android:textSize="14sp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <TableLayout
+        android:id="@+id/visible_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:text="매수" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:text="매도" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/exchange"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/unit_price"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center" />
+
+        </TableRow>
+    </TableLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>
