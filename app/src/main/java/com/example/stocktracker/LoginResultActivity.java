@@ -1,4 +1,4 @@
-package com.example.stocktracker.Login;
+package com.example.stocktracker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,28 +13,23 @@ import android.widget.TextView;
 
 import com.example.stocktracker.FriendFragment.FriendFragment;
 import com.example.stocktracker.Home.Main_Fragment;
-import com.example.stocktracker.R;
+import com.example.stocktracker.Login.LoginActivity;
 import com.example.stocktracker.TableFragment.TableSetFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LoginResultActivity extends AppCompatActivity {
 
     Button buttonLogout;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_result);
 
-        TextView textViewGet = findViewById(R.id.textview_get);
-
         Intent intent = getIntent();
 
         Bundle bundle = intent.getExtras();
-        String id = bundle.getString("id");
-        String password = bundle.getString("password");
-
-        textViewGet.setText(id + "\n"  + password);
 
         buttonLogout = (Button) findViewById(R.id.logout_btn);
 
@@ -52,6 +47,30 @@ public class LoginResultActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        /* Bottom Navigation */
+        bottomNavigationView = findViewById(R.id.bottomNavi);
+
+        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new Main_Fragment()).commit();
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch ( item.getItemId() ) {
+                    case R.id.home_fragment:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new Main_Fragment()).commit();
+                        break;
+                    case R.id.table_fragment:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new TableSetFragment()).commit();
+                        break;
+                    case R.id.friend_fragment:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new FriendFragment()).commit();
+                        break;
+                }
+                return true;
+            }
+        });
+        /* Bottom Navigation */
 
     }
 }

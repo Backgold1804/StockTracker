@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.stocktracker.Data;
+import com.example.stocktracker.LoginResultActivity;
 import com.example.stocktracker.R;
 import com.example.stocktracker.RetrofitHelper;
 import com.example.stocktracker.RetrofitService;
