@@ -18,11 +18,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TableSetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TableSetFragment extends Fragment {
 
     private TableFragment tableFragment;
@@ -31,46 +27,12 @@ public class TableSetFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewpagerFragmentAdapter viewpagerFragmentAdapter;
     private int tabCurrentIdx = 0;
+    private int custUid;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public TableSetFragment() {
-        // Required empty public constructor
+    public TableSetFragment(int cust_uid) {
+        this.custUid = cust_uid;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TableSetFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TableSetFragment newInstance(String param1, String param2) {
-        TableSetFragment fragment = new TableSetFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,7 +44,7 @@ public class TableSetFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
         //피드 구성하는 탭레이아웃 + 뷰페이저
         //커스텀 어댑터 생성
-        viewpagerFragmentAdapter = new ViewpagerFragmentAdapter(getChildFragmentManager(), 2);
+        viewpagerFragmentAdapter = new ViewpagerFragmentAdapter(getChildFragmentManager(), 2, custUid);
         viewPager.setAdapter(viewpagerFragmentAdapter);
         viewPager.setCurrentItem(tabCurrentIdx);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

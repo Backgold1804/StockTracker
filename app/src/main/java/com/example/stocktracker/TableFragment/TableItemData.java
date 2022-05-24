@@ -1,90 +1,97 @@
 package com.example.stocktracker.TableFragment;
 
 
+import java.util.List;
+
 public class TableItemData {
+    int my_stock_uid;
     String country;
-    String title;
+    String stock_name;
     String ticker;
     int current_price;
-    int yesterday_price;
-    int average_unit_price;
-    int holding_quantity;
+    int blended_price;
+    int holdings;
     int profit;
     float profit_rate;
-    float holding_weight;
-    int date;
-    String exchange;
-    int unit_price;
+    List<TradingItemData> data_list;
 
+    public int getMy_stock_uid() {
+        return my_stock_uid;
+    }
 
-    public TableItemData(String country, String title, String ticker, int current_price, int yesterday_price, int average_unit_price, int holding_quantity, int profit, float profit_rate, float holding_weight, int date, String exchange, int unit_price) {
-        this.country = country;
-        this.title = title;
-        this.ticker = ticker;
-        this.current_price = current_price;
-        this.yesterday_price = yesterday_price;
-        this.average_unit_price = average_unit_price;
-        this.holding_quantity = holding_quantity;
-        this.profit = profit;
-        this.profit_rate = profit_rate;
-        this.holding_weight = holding_weight;
-        this.date = date;
-        this.exchange = exchange;
-        this.unit_price = unit_price;
+    public void setMy_stock_uid(int my_stock_uid) {
+        this.my_stock_uid = my_stock_uid;
     }
 
     public String getCountry() {
         return country;
     }
+
     public void setCountry(String country) {
         this.country = country;
     }
 
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
+    public String getStock_name() {
+        return stock_name;
     }
 
-    public String getTicker() { return ticker; }
-    public void setTicker(String code) { this.ticker = ticker; }
-
-    public int getCurrentPrice() { return current_price; }
-    public void setCurrentPrice(int current_price) { this.current_price = current_price; }
-
-    public int getYesterdayPrice() { return yesterday_price; }
-    public void setYesterdayPrice(int yesterday_price) { this.yesterday_price = yesterday_price; }
-
-    public int getAverageUnitPrice() { return average_unit_price; }
-    public void setAverageUnitPrice(int average_unit_price) { this.average_unit_price = average_unit_price; }
-
-    public int getHoldingQuantity() { return holding_quantity; }
-    public void setHoldingQuantity(int holding_quantity) { this.holding_quantity = holding_quantity; }
-
-    public int getProfit() { return profit; }
-    public void setProfit(int profit) { this.profit = profit; }
-
-    public float getProfitRate() { return profit_rate; }
-    public void setProfitRate(float profit_rate) { this.profit_rate = profit_rate; }
-
-    public float getHoldingWeight() { return holding_weight; }
-    public void setHoldingWeight(float holding_weight) { this.holding_weight = holding_weight; }
-
-    public int getDate() {
-        return date;
-    }
-    public void setDate(int date) {
-        this.date = date;
+    public void setStock_name(String stock_name) {
+        this.stock_name = stock_name;
     }
 
-    public String getExchange() {
-        return exchange;
-    }
-    public void setExchange(String exchange) {
-        this.exchange = exchange;
+    public String getTicker() {
+        return ticker;
     }
 
-    public int getUnitPrice() { return unit_price; }
-    public void setUnitPrice(int unit_price) { this.unit_price = unit_price; }
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+    }
+
+    public int getCurrent_price() {
+        return current_price;
+    }
+
+    public void setCurrent_price(int current_price) {
+        this.current_price = current_price;
+    }
+
+    public int getBlended_price() {
+        return blended_price;
+    }
+
+    public void setBlended_price(int blended_price) {
+        this.blended_price = blended_price;
+    }
+
+    public int getHoldings() {
+        return holdings;
+    }
+
+    public void setHoldings(int holdings) {
+        this.holdings = holdings;
+    }
+
+    public int getProfit() {
+        return profit;
+    }
+
+    public void setProfit(int profit) {
+        this.profit = profit;
+    }
+
+    public float getProfit_rate() {
+        return profit_rate;
+    }
+
+    public void setProfit_rate(float profit_rate) {
+        this.profit_rate = profit_rate;
+    }
+
+    public List<TradingItemData> getData_list() {
+        return data_list;
+    }
+
+    public void setData_list(List<TradingItemData> data_list) {
+        this.data_list = data_list;
+    }
 }

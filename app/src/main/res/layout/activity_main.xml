@@ -6,21 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavi"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="#fff"
-        app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu" />
-
-    <FrameLayout
-        android:id="@+id/main_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Stock Tracker" />
 
 </RelativeLayout>

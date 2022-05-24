@@ -136,8 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         Intent intent = new Intent(LoginActivity.this, LoginResultActivity.class);
-                        intent.putExtra("id", data.getDatas().get("id").toString());
-                        intent.putExtra("password", data.getDatas().get("password").toString());
+                        intent.putExtra("cust_uid", Integer.parseInt(data.getDatas().get("uid").toString()));
                         startActivity(intent);
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

@@ -21,4 +21,10 @@ public interface RetrofitService {
 
     @GET("/findPassword")
     Call<Data> findPassword(@Query("id") String id, @Query("phone") String phone, @Query("findId") String findId);
+
+    @GET("/selectStockList")
+    Call<ListData> selectStockList(@Query("cust_uid") int cust_uid);
+
+    @GET("/selectTradingList")
+    Call<ListData> selectTradingList(@Query("my_stock_uid") int my_stock_uid);
 }

@@ -22,8 +22,6 @@ import com.example.stocktracker.Login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,30 +37,5 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }, 3000);
-
-
-        /* Bottom Navigation */
-        bottomNavigationView = findViewById(R.id.bottomNavi);
-
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new Main_Fragment()).commit();
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch ( item.getItemId() ) {
-                    case R.id.home_fragment:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new Main_Fragment()).commit();
-                        break;
-                    case R.id.table_fragment:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new TableSetFragment()).commit();
-                        break;
-                    case R.id.friend_fragment:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new FriendFragment()).commit();
-                        break;
-                }
-                return true;
-            }
-        });
-        /* Bottom Navigation */
     }
 }
