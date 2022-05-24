@@ -1,31 +1,36 @@
-//package com.example.stocktracker.TableFragment;
-//
-//import android.view.View;
-//import android.widget.TextView;
-//
-//import androidx.annotation.NonNull;
-//import androidx.recyclerview.widget.RecyclerView;
-//
-//import com.example.stocktracker.R;
-//
-//import java.text.DecimalFormat;
-//
-//public class TradingViewHolder extends RecyclerView.ViewHolder {
-//    TextView date, exchange, unit_price, quantity;
-//
-//    public TradingViewHolder(@NonNull View itemView) {
-//        super(itemView);
-//        date = itemView.findViewById(R.id.date);
-//        exchange = itemView.findViewById(R.id.exchange);
-//        unit_price = itemView.findViewById(R.id.unit_price);
-//        quantity = itemView.findViewById(R.id.quantity);
-//    }
-//
-//    public void onBind(TradingData tradingData, int position) {
-//        DecimalFormat df = new DecimalFormat("###,###");
-//        date.setText("" + tradingData.getDate());
-//        exchange.setText(tradingData.getExchange());
-//        unit_price.setText(df.format(tradingData.getUnitPrice()));
-//        quantity.setText(df.format(tradingData.getQuantity()));
-//    }
-//}
+package com.example.stocktracker.TableFragment;
+
+import android.view.View;
+import android.widget.TableRow;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.stocktracker.R;
+
+import java.text.DecimalFormat;
+
+public class TradingViewHolder extends RecyclerView.ViewHolder {
+    TextView ticker, exchange, unitPrice, orderAmount;
+    TableRow tableRow;
+
+    public TradingViewHolder(@NonNull View view) {
+        super(view);
+
+        ticker = view.findViewById(R.id._ticker);
+        exchange = view.findViewById(R.id._exchange);
+        unitPrice = view.findViewById(R.id._unit_price);
+        orderAmount = view.findViewById(R.id._order_amount);
+
+        tableRow = view.findViewById(R.id._table_row);
+    }
+
+    public void onBind(TradingItemData tradingItemData) {
+        DecimalFormat priceFormat = new DecimalFormat("###,###,###");
+        ticker.setText(tradingItemData.getTicker());
+        exchange.setText(tradingItemData.getExchange());
+        unitPrice.setText(priceFormat.format(tradingItemData.getOrder_price()));
+        orderAmount.setText(priceFormat.format(tradingItemData.getOrder_amount()));
+    }
+}

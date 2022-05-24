@@ -19,6 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LoginResultActivity extends AppCompatActivity {
 
+    int custUid;
     Button buttonLogout;
     BottomNavigationView bottomNavigationView;
 
@@ -28,6 +29,7 @@ public class LoginResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_result);
 
         Intent intent = getIntent();
+        custUid = intent.getExtras().getInt("cust_uid");
 
         Bundle bundle = intent.getExtras();
 
@@ -61,7 +63,7 @@ public class LoginResultActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new Main_Fragment()).commit();
                         break;
                     case R.id.table_fragment:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new TableSetFragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new TableSetFragment(custUid)).commit();
                         break;
                     case R.id.friend_fragment:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new FriendFragment()).commit();

@@ -15,30 +15,30 @@ import com.example.stocktracker.R;
 import java.text.DecimalFormat;
 
 public class TableViewHolder extends RecyclerView.ViewHolder {
-    TextView country, title, ticker, current_price, yesterday_price, average_unit_price, holding_quantity, profit,
-            profit_rate, holding_weight, date, exchange, unit_price;
+
+    TextView country, stockName, ticker, currentPrice, blendedPrice, profitRate, holdings, amountPrice, profit;
     LinearLayout linearLayout;
-    TableLayout visible_layout;
+    TableLayout visibleLayout;
+    RecyclerView recyclerView;
 
     OnViewHolderItemClickListener onViewHolderItemClickListener;
 
-    //  생성자
-    public TableViewHolder(@NonNull View itemView) {
-        super(itemView);
-        country = itemView.findViewById(R.id.country);
-        title = itemView.findViewById(R.id.title);
-        ticker = itemView.findViewById(R.id.ticker);
-        current_price = itemView.findViewById(R.id.current_price);
-        yesterday_price = itemView.findViewById(R.id.yesterday_price);
-        average_unit_price = itemView.findViewById(R.id.average_unit_price);
-        holding_quantity = itemView.findViewById(R.id.holding_quantity);
-        profit = itemView.findViewById(R.id.profit);
-        profit_rate = itemView.findViewById(R.id.profit_rate);
-        date = itemView.findViewById(R.id.date);
-        exchange = itemView.findViewById(R.id.exchange);
-        unit_price = itemView.findViewById(R.id.unit_price);
-        linearLayout = itemView.findViewById(R.id.linearlayout);
-        visible_layout = itemView.findViewById(R.id.visible_layout);
+    public TableViewHolder(@NonNull View view) {
+        super(view);
+
+        country = view.findViewById(R.id.country);
+        stockName = view.findViewById(R.id.stock_name);
+        ticker = view.findViewById(R.id.ticker);
+        currentPrice = view.findViewById(R.id.current_price);
+        blendedPrice = view.findViewById(R.id.blended_price);
+        profit = view.findViewById(R.id.profit);
+        profitRate = view.findViewById(R.id.profit_rate);
+        holdings = view.findViewById(R.id.holdings);
+        amountPrice = view.findViewById(R.id.amount_price);
+
+        linearLayout = view.findViewById(R.id.linear_layout);
+        visibleLayout = view.findViewById(R.id.visible_layout);
+        recyclerView = view.findViewById(R.id.trading_recycler_view);
 
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,38 +48,34 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    //  클릭한 Item에 값을 바인딩
     public void onBind(TableItemData tableItemData, int position, SparseBooleanArray selectedItems) {
-        DecimalFormat df = new DecimalFormat("###,###,###");
+        DecimalFormat priceFormat = new DecimalFormat("###,###,###");
+        DecimalFormat rateFormat = new DecimalFormat("##.##");
+
         country.setText(tableItemData.getCountry());
-        title.setText(tableItemData.getTitle());
-        ticker.setText(tableItemData.getTicker());
-        current_price.setText(df.format(tableItemData.getCurrentPrice()));
-        yesterday_price.setText(df.format(tableItemData.getCurrentPrice()*tableItemData.getHoldingQuantity()));
-        average_unit_price.setText(df.format(tableItemData.getAverageUnitPrice()));
-        holding_quantity.setText(df.format(tableItemData.getHoldingQuantity()));
-        profit.setText(df.format(tableItemData.getProfit()*tableItemData.getHoldingQuantity()));
-        profit_rate.setText(Float.toString(tableItemData.getProfitRate())+"%");
-        date.setText(""+ tableItemData.getDate());
-        exchange.setText(tableItemData.getExchange());
-        unit_price.setText(df.format(tableItemData.getUnitPrice()));
+        stockName.setText(tableItemData.getStock_name());
+        ticker.setText(String.valueOf(tableItemData.getTicker()));
+        currentPrice.setText(priceFormat.format(tableItemData.getCurrent_price()));
+        blendedPrice.setText(priceFormat.format(tableItemData.getBlended_price()));
+        profit.setText(priceFormat.format(tableItemData.getProfit() * tableItemData.getHoldings()));
+        profitRate.setText(rateFormat.format(tableItemData.getProfit_rate()) + "%");
+        holdings.setText(String.valueOf(tableItemData.getHoldings()));
+        amountPrice.setText(priceFormat.format(tableItemData.getCurrent_price() * tableItemData.getHoldings()));
 
         changeVisibility(selectedItems.get(position));
     }
 
     private void changeVisibility(final boolean isExpanded) {
         ValueAnimator va = isExpanded ? ValueAnimator.ofInt(0, 600) : ValueAnimator.ofInt(600, 0);
-        //  Animator가 실행되는 시간(ms)
+
         va.setDuration(500);
 
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                //  TableLayout이 나타나거나 사라지게 만드는 부분
-                visible_layout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+            public void onAnimationUpdate(ValueAnimator animation) {
+                visibleLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
             }
         });
-        //  Animation 시작
         va.start();
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearlayout"
+    android:id="@+id/linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -25,7 +25,7 @@
                 android:gravity="center" />
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/stock_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center" />
@@ -53,7 +53,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/average_unit_price"
+                    android:id="@+id/blended_price"
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:gravity="center"
@@ -64,9 +64,7 @@
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:gravity="center"
-                    android:textSize="14sp" /><![CDATA[/>
-
-                ]]>
+                    android:textSize="14sp" />
             </TableRow>
 
             <TableRow
@@ -74,14 +72,14 @@
                 android:layout_height="35dp">
 
                 <TextView
-                    android:id="@+id/holding_quantity"
+                    android:id="@+id/holdings"
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:gravity="center"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/yesterday_price"
+                    android:id="@+id/amount_price"
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:gravity="center"
@@ -126,32 +124,9 @@
                 android:text="매도" />
         </TableRow>
 
-        <TableRow>
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center" />
-
-            <TextView
-                android:id="@+id/exchange"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center" />
-
-            <TextView
-                android:id="@+id/unit_price"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center" />
-
-        </TableRow>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trading_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </TableLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-
 </LinearLayout>

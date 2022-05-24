@@ -1,63 +1,136 @@
 package com.example.stocktracker.TableFragment;
 
 import android.annotation.SuppressLint;
+import android.text.Layout;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.stocktracker.ListData;
 import com.example.stocktracker.R;
+import com.example.stocktracker.RetrofitHelper;
+import com.example.stocktracker.RetrofitService;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    //  adapter에 들어갈 list
-    private ArrayList<TableItemData> listData = new ArrayList<>();
-    //  Item의 클릭 상태를 저장할 array 객체
+public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
+
+    private List<TableItemData> listData = new ArrayList<>();
+
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
-    //  직전에 클릭했던 Item의 position
+
     private int prePosition = -1;
+
+    private int custUid;
+    TradingAdpater adapter;
+
+    TableAdapter(int cust_uid) {
+        this.custUid = cust_uid;
+    }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //  xml파일로 View객체를 생성
+    public TableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tableitem, parent, false);
-
         return new TableViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        TableViewHolder viewHolderItems = (TableViewHolder) holder;
-        //  veiwHolderItems에 클릭한 아이템을 바인딩
-        viewHolderItems.onBind(listData.get(position), position, selectedItems);
+    public void onBindViewHolder(@NonNull TableViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        holder.onBind(listData.get(position), position, selectedItems);
 
-        viewHolderItems.setOnViewHolderItemClickListener(new OnViewHolderItemClickListener() {
+        TableItemData itemData = listData.get(position);
+
+        if (itemData.getData_list() == null) itemData.setData_list(addDataList(itemData.getMy_stock_uid()));
+
+        holder.setOnViewHolderItemClickListener(new OnViewHolderItemClickListener() {
             @Override
             public void onViewHolderItemClick() {
                 if (selectedItems.get(position)) {
-                    //  펼처진 Item을 클릭하면 seletedItems에서 제거
                     selectedItems.delete(position);
                 } else {
-                    //  직전에 클릭했던 seletedItems를 제거
                     selectedItems.delete(prePosition);
-                    //  클릭된 Items의 position을 저장
                     selectedItems.put(position, true);
                 }
 
-                //  클릭한 포지션의 변화를 알림
                 if (prePosition != -1) notifyItemChanged(prePosition);
                 notifyItemChanged(position);
-                //  클릭된 position을 prePosition에 저장
+
                 prePosition = position;
             }
         });
+
+        init(holder, itemData);
+    }
+
+    private void init(TableViewHolder holder, TableItemData itemData) {
+        RecyclerView recyclerView = holder.recyclerView.findViewById(R.id.trading_recycler_view);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(holder.recyclerView.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new TradingAdpater(itemData.getData_list());
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(holder.recyclerView.getContext(), layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    private List<TradingItemData> addDataList(int my_stock_uid) {
+        RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
+
+        Call<ListData> call = networkService.selectTradingList(my_stock_uid);
+
+        List<TradingItemData> tradingItemData = new ArrayList<>();
+
+        call.enqueue(new Callback<ListData>() {
+            @Override
+            public void onResponse(Call<ListData> call, Response<ListData> response) {
+                Log.d("retrofit", "Find Trading List fetch success");
+
+                if (response.isSuccessful() && response != null) {
+                    ListData data = response.body();
+
+                    Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
+
+                    if ("000".equals(data.getResponse_cd())) {
+                        for (Map map : data.getDatas()) {
+                            TradingItemData itemData = new TradingItemData();
+                            itemData.setTicker(map.get("ticker").toString());
+                            itemData.setStock_name(map.get("stock_name").toString());
+                            itemData.setExchange((map.get("trading").toString()));
+                            itemData.setOrder_price(Integer.parseInt(map.get("order_price").toString()));
+                            itemData.setOrder_amount(Integer.parseInt(map.get("order_amount").toString()));
+                            tradingItemData.add(itemData);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ListData> call, Throwable t) {
+                Log.d("retrofit", "통신 실패");
+                t.printStackTrace();
+            }
+        });
+
+        return tradingItemData;
     }
 
     @Override
@@ -65,49 +138,55 @@ public class TableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return listData.size();
     }
 
-    //  외부에서 item을 추가
     void addItem(TableItemData tableItemData) {
         listData.add(tableItemData);
     }
 
+    public void clear() {
+        listData.clear();
+        prePosition = -1;
+    }
+
     public String sumItem() {
         int sum = 0;
-        DecimalFormat df = new DecimalFormat("###,###,###");
+        DecimalFormat priceFormat = new DecimalFormat("###,###,###");
 
         for(int i = 0; i < listData.size(); i++) {
-            sum += listData.get(i).current_price * listData.get(i).holding_quantity;
+            sum += listData.get(i).current_price * listData.get(i).holdings;
         }
 
-        return df.format(sum);
+        return priceFormat.format(sum);
     }
 
     public String getTotalProfit() {
-        DecimalFormat df = new DecimalFormat("###,###,###");
         int profit = 0;
         int avg = 0;
         int cur = 0;
-        for(int i = 0; i < listData.size(); i++) {
-            avg += listData.get(i).average_unit_price * listData.get(i).holding_quantity;
-            cur += listData.get(i).current_price * listData.get(i).holding_quantity;
+        DecimalFormat priceFormat = new DecimalFormat("###,###,###");
+
+        for (int i = 0; i < listData.size(); i++) {
+            avg += listData.get(i).blended_price * listData.get(i).holdings;
+            cur += listData.get(i).current_price * listData.get(i).holdings;
         }
 
         profit = cur - avg;
 
-        return df.format(profit);
+        return priceFormat.format(profit);
     }
 
     public String getProfitRate() {
-        DecimalFormat df = new DecimalFormat("##.##");
-        float profitrate = 0;
+        float profitRate = 0;
         int avg = 0;
         int cur = 0;
-        for(int i = 0; i < listData.size(); i++) {
-            avg += listData.get(i).average_unit_price * listData.get(i).holding_quantity;
-            cur += listData.get(i).current_price * listData.get(i).holding_quantity;
+        DecimalFormat rateFormat = new DecimalFormat("##.##");
+
+        for (int i = 0; i < listData.size(); i++) {
+            avg += listData.get(i).blended_price * listData.get(i).holdings;
+            cur += listData.get(i).current_price * listData.get(i).holdings;
         }
 
-        profitrate = (float) (cur - avg)/avg * 100;
+        profitRate = (float) (cur - avg) / avg * 100;
 
-        return df.format(profitrate);
+        return rateFormat.format(profitRate);
     }
 }

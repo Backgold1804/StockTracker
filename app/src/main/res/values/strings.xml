@@ -16,4 +16,13 @@
     <string name="nickname">닉네임</string>
     <string name="auto_login">자동 로그인</string>
 
+    <string name="country_text">나라</string>
+    <string name="stock_name_text">종목명</string>
+    <string name="ticker_text">(종목코드)</string>
+    <string name="current_price_text">현재가</string>
+    <string name="blended_price_text">평균단가</string>
+    <string name="profit_rate_text">수익률</string>
+    <string name="holding_text">보유수량</string>
+    <string name="amount_price_text">평가금액</string>
+    <string name="profit_text">수익</string>
 </resources>
