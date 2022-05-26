@@ -9,10 +9,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.stocktracker.FriendFragment.FriendFragment;
-import com.example.stocktracker.Home.Main_Fragment;
+import com.example.stocktracker.Home.MainFragment;
 import com.example.stocktracker.Login.LoginActivity;
 import com.example.stocktracker.TableFragment.TableSetFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -53,14 +52,14 @@ public class LoginResultActivity extends AppCompatActivity {
         /* Bottom Navigation */
         bottomNavigationView = findViewById(R.id.bottomNavi);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new Main_Fragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new MainFragment(custUid)).commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch ( item.getItemId() ) {
                     case R.id.home_fragment:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new Main_Fragment()).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MainFragment(custUid)).commit();
                         break;
                     case R.id.table_fragment:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new TableSetFragment(custUid)).commit();
