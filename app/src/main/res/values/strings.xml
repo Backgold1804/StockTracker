@@ -25,4 +25,6 @@
     <string name="holding_text">보유수량</string>
     <string name="amount_price_text">평가금액</string>
     <string name="profit_text">수익</string>
+
+    <string name="home_total_price">투자금액</string>
 </resources>
