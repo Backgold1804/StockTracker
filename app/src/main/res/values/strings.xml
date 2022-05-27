@@ -25,4 +25,11 @@
     <string name="holding_text">보유수량</string>
     <string name="amount_price_text">평가금액</string>
     <string name="profit_text">수익</string>
+
+    <string name="buy_amount_text">매수량</string>
+    <string name="sell_amount_text">매도량</string>
+    <string name="average_price_text">평단가</string>
+    <string name="date_text">날짜</string>
+    <string name="enter_text">등록</string>
+    <string name="cancel_text">취소</string>
 </resources>

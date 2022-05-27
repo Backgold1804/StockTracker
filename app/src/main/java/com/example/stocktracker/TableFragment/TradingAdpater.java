@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stocktracker.R;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +33,14 @@ public class TradingAdpater extends RecyclerView.Adapter<TradingViewHolder> {
     public void onBindViewHolder(@NonNull TradingViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.onBind(listData.get(position));
 
+        DecimalFormat commaFormat = new DecimalFormat("###,###,###");
+
         TradingItemData itemData = listData.get(position);
 
         holder.ticker.setText(itemData.getTicker());
         holder.exchange.setText(itemData.getExchange());
-        holder.orderAmount.setText(String.valueOf(itemData.getOrder_amount()));
-        holder.unitPrice.setText(String.valueOf(itemData.getOrder_price()));
+        holder.orderAmount.setText(commaFormat.format(itemData.getOrder_amount()));
+        holder.unitPrice.setText(commaFormat.format(itemData.getOrder_price()));
     }
 
     @Override
