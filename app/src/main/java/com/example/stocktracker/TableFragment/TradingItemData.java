@@ -1,18 +1,18 @@
 package com.example.stocktracker.TableFragment;
 
 public class TradingItemData {
-    String ticker;
+    String date;
     String stock_name;
     String exchange;
     int order_price;
     int order_amount;
 
-    public String getTicker() {
-        return ticker;
+    public String getDate() {
+        return date;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getStock_name() {

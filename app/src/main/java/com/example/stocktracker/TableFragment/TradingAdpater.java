@@ -32,15 +32,6 @@ public class TradingAdpater extends RecyclerView.Adapter<TradingViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull TradingViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.onBind(listData.get(position));
-
-        DecimalFormat commaFormat = new DecimalFormat("###,###,###");
-
-        TradingItemData itemData = listData.get(position);
-
-        holder.ticker.setText(itemData.getTicker());
-        holder.exchange.setText(itemData.getExchange());
-        holder.orderAmount.setText(commaFormat.format(itemData.getOrder_amount()));
-        holder.unitPrice.setText(commaFormat.format(itemData.getOrder_price()));
     }
 
     @Override
