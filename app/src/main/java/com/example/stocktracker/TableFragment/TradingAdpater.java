@@ -32,12 +32,6 @@ public class TradingAdpater extends RecyclerView.Adapter<TradingViewHolder> {
     public void onBindViewHolder(@NonNull TradingViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.onBind(listData.get(position));
 
-        TradingItemData itemData = listData.get(position);
-
-        holder.ticker.setText(itemData.getTicker());
-        holder.exchange.setText(itemData.getExchange());
-        holder.orderAmount.setText(String.valueOf(itemData.getOrder_amount()));
-        holder.unitPrice.setText(String.valueOf(itemData.getOrder_price()));
     }
 
     @Override
