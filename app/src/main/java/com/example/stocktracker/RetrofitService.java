@@ -27,4 +27,24 @@ public interface RetrofitService {
 
     @GET("/selectTradingList")
     Call<ListData> selectTradingList(@Query("my_stock_uid") int my_stock_uid);
+
+    @GET("/getStockList")
+    Call<ListData> getStockList();
+
+    @POST("/putNewStock")
+    Call<Data> putNewStock(@Query("cust_uid") int cust_uid,
+                        @Query("stock_name") String stock_name,
+                        @Query("price") int price,
+                        @Query("amount") int amount,
+                        @Query("date") String date,
+                        @Query("time") String time);
+
+    @POST("/putTrading")
+    Call<Data> putTrading(@Query("cust_uid") int cust_uid,
+                           @Query("stock_name") String stock_name,
+                           @Query("trading") String trading,
+                           @Query("price") int price,
+                           @Query("amount") int amount,
+                           @Query("date") String date,
+                           @Query("time") String time);
 }
