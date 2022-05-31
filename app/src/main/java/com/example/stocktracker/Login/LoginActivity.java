@@ -3,6 +3,7 @@ package com.example.stocktracker.Login;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.stocktracker.Data;
 import com.example.stocktracker.LoginResultActivity;
+import com.example.stocktracker.PreferenceManager;
 import com.example.stocktracker.R;
 import com.example.stocktracker.RetrofitHelper;
 import com.example.stocktracker.RetrofitService;
@@ -35,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
 
     String autoId, autoPassword;
 
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +49,14 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = (Button) findViewById(R.id.login_btn);
         checkAutoLogin = (CheckBox) findViewById(R.id.auto_login);
 
-        SharedPreferences auto = getSharedPreferences("autoLogin", MODE_PRIVATE);
-        autoId = auto.getString("id", null);
-        autoPassword = auto.getString("password", null);
+        context = this;
 
-        if (autoId != null && autoPassword != null) {
+        autoId = PreferenceManager.getString(context, "id");
+        autoPassword = PreferenceManager.getString(context, "password");
+
+        if ("".equals(autoId) || "".equals(autoPassword)) {
+
+        } else {
             loginResponse();
         }
 
@@ -105,12 +112,12 @@ public class LoginActivity extends AppCompatActivity {
         String id;
         String password;
 
-        if (autoId != null && autoPassword != null) {
-            id = autoId;
-            password = autoPassword;
-        } else {
+        if ("".equals(autoId) || "".equals(autoPassword)) {
             id = editTextID.getText().toString();
             password = editTextPassword.getText().toString();
+        } else {
+            id = autoId;
+            password = autoPassword;
         }
 
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
@@ -128,11 +135,8 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("OnResponse", data.getResponse_cd() + " " + data.getResponse_msg());
                     if("000".equals(data.getResponse_cd())) {
                         if (checkAutoLogin.isChecked()) {
-                            SharedPreferences auto = getSharedPreferences("autoLogin", MODE_PRIVATE);
-                            SharedPreferences.Editor autoLoginEdit = auto.edit();
-                            autoLoginEdit.putString("id", id)
-                                    .putString("password", password)
-                                    .commit();
+                            PreferenceManager.setString(context, "id", id);
+                            PreferenceManager.setString(context, "password", password);
                         }
 
                         Intent intent = new Intent(LoginActivity.this, LoginResultActivity.class);

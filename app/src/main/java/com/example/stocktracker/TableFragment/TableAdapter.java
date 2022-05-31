@@ -191,6 +191,8 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
 
         profitRate = (float) (cur - avg) / avg * 100;
 
+        if (Float.isNaN(profitRate)) profitRate = 0;
+
         return rateFormat.format(profitRate);
     }
 }
