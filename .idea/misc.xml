@@ -9,10 +9,12 @@
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/drawable/layout_gray.xml" value="0.2655" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_find_id.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_find_password.xml" value="0.18489583333333334" />
-        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_join.xml" value="0.1" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_join.xml" value="0.33" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_login.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_login_result.xml" value="0.33" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_main.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_revise.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_update_user.xml" value="0.34739583333333335" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/buy_dialog.xml" value="0.1" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/create_dialog.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_chart.xml" value="0.3619791666666667" />
@@ -22,10 +24,13 @@
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_table_set.xml" value="0.17603850050658562" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/listitem.xml" value="0.33" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/sell_dialog.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/table_toolbar.xml" value="0.29615384615384616" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/tableitem.xml" value="0.17603850050658562" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/toolbar.xml" value="0.18385416666666668" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/tradingitem.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/menu/app_menu.xml" value="0.271484375" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/menu/bottom_menu.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/menu/include_add_menu.xml" value="0.3609375" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3155" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3155" />
         <entry key="app/src/main/res/layout/activity_find_id.xml" value="0.2640625" />

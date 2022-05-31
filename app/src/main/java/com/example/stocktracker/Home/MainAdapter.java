@@ -73,6 +73,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
         profitRate = (float) (cur - avg) / avg * 100;
 
+        if (Float.isNaN(profitRate)) profitRate = 0;
+
         return rateFormat.format(profitRate);
     }
 

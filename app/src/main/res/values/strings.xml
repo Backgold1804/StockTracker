@@ -1,4 +1,3 @@
-
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_name">StockTracker</string>
@@ -15,6 +14,7 @@
     <string name="find_id_phrase_ex">ex)나의아이디</string>
     <string name="nickname">닉네임</string>
     <string name="auto_login">자동 로그인</string>
+    <string name="update">수정하기</string>
 
     <string name="country_text">나라</string>
     <string name="stock_name_text">종목명</string>
@@ -37,5 +37,8 @@
 
     <string name="home_total_price">투자금액</string>
     <string name="buy_stock_text">Buy Stock</string>
+    <string name="update_user">회원정보수정</string>
+    <string name="delete_user">회원탈퇴</string>
+    <string name="logout">로그아웃</string>
 
 </resources>

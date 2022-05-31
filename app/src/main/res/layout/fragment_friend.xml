@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".FriendFragment.FriendFragment">
 
+    <include layout="@layout/toolbar" />
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"

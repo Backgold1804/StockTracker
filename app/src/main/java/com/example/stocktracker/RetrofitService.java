@@ -47,4 +47,17 @@ public interface RetrofitService {
                            @Query("amount") int amount,
                            @Query("date") String date,
                            @Query("time") String time);
+
+    @GET("/deleteUser")
+    Call<Data> deleteUser(@Query("uid") int uid);
+
+    @GET("/setUser")
+    Call<Data> setUser(@Query("uid") int uid);
+
+    @POST("/updateUser")
+    Call<Data> updateUser(@Query("uid") int id,
+                       @Query("password") String password,
+                       @Query("phone") String phone,
+                       @Query("find_id") String findId,
+                       @Query("nickname") String nickname);
 }
