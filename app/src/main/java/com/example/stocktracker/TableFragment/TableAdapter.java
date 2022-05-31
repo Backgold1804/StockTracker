@@ -38,6 +38,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
 
     private int custUid;
     TradingAdpater adapter;
+    TableFragment tableFragment;
 
     TableAdapter(int cust_uid) {
         this.custUid = cust_uid;
@@ -47,7 +48,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
     @Override
     public TableViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tableitem, parent, false);
-        return new TableViewHolder(view, custUid);
+        return new TableViewHolder(view, custUid, this);
     }
 
     @Override
@@ -133,10 +134,6 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         return tradingItemData;
     }
 
-    /* 매매 버튼 Test */
-
-    /* 매매 버튼 Test */
-
     @Override
     public int getItemCount() {
         return listData.size();
@@ -194,5 +191,13 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         if (Float.isNaN(profitRate)) profitRate = 0;
 
         return rateFormat.format(profitRate);
+    }
+
+    public TableFragment getTableFragment() {
+        return tableFragment;
+    }
+
+    public void setTableFragment(TableFragment tableFragment) {
+        this.tableFragment = tableFragment;
     }
 }

@@ -66,11 +66,22 @@ public class TableFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_table, container, false);
         adapter = new TableAdapter(custUid);
+        adapter.setTableFragment(this);
 
         init();
         getData();
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter = new TableAdapter(custUid);
+        adapter.setTableFragment(this);
+
+        init();
+        getData();
     }
 
     private void init() {

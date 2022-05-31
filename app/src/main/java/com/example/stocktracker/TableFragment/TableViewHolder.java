@@ -54,14 +54,15 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
     private int custUid;
 
     private Context context;
-    TableAdapter adapter = new TableAdapter(custUid);
+    TableAdapter adapter;
 
     OnViewHolderItemClickListener onViewHolderItemClickListener;
 
-    public TableViewHolder(@NonNull View view, int cust_uid) {
+    public TableViewHolder(@NonNull View view, int cust_uid, TableAdapter tableAdapter) {
         super(view);
 
         context = view.getContext();
+        this.adapter = tableAdapter;
 
         this.custUid = cust_uid;
 
@@ -150,6 +151,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                             putTrading(stock_name, "B", price, amount, date, time);
                             buyDialog.dismiss();
                             adapter.notifyDataSetChanged();
+                            adapter.getTableFragment().onResume();
                         }
                     }
                 });
@@ -294,6 +296,8 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                             } else {
                                 putTrading(stock_name, "S", price, amount, date, time);
                                 sellDialog.dismiss();
+                                adapter.notifyDataSetChanged();
+                                adapter.getTableFragment().onResume();
                             }
                         }
                     }
