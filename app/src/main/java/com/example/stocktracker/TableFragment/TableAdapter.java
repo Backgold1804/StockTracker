@@ -113,6 +113,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
                     if ("000".equals(data.getResponse_cd())) {
                         for (Map map : data.getDatas()) {
                             TradingItemData itemData = new TradingItemData();
+                            itemData.setMy_stock_uid(Integer.parseInt(map.get("uid").toString()));
                             itemData.setDate(map.get("insert_date").toString().split(" ")[0]);
                             itemData.setStock_name(map.get("stock_name").toString());
                             itemData.setExchange((map.get("trading").toString()));
