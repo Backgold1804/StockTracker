@@ -34,7 +34,7 @@
         <entry key="app/src/main/res/layout/activity_update_user.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res/layout/buy_dialog.xml" value="0.25987841945288753" />
         <entry key="app/src/main/res/layout/create_dialog.xml" value="0.25987841945288753" />
-        <entry key="app/src/main/res/layout/fragment_chart.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/fragment_chart.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_friend.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.2640625" />
