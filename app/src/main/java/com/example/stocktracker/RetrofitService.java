@@ -60,4 +60,16 @@ public interface RetrofitService {
                        @Query("phone") String phone,
                        @Query("find_id") String findId,
                        @Query("nickname") String nickname);
+
+    @POST("/addFriend")
+    Call<Data> addFriend(@Query("uid") int uid, @Query("nickname") String nickname);
+
+    @GET("/selectFriend")
+    Call<ListData> selectFriend(@Query("uid") int uid);
+
+    @GET("/deleteFriend")
+    Call<Data> deleteFriend(@Query("uid") int uid, @Query("nickname") String nickname);
+
+    @GET("/deleteTrading")
+    Call<Data> deleteTrading(@Query("uid") int uid);
 }

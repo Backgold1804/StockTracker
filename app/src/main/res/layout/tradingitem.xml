@@ -8,28 +8,36 @@
         android:id="@+id/_date"
         android:layout_width="0dp"
         android:layout_height="35dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/_exchange"
         android:layout_width="0dp"
         android:layout_height="35dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/_unit_price"
         android:layout_width="0dp"
         android:layout_height="35dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/_order_amount"
         android:layout_width="0dp"
         android:layout_height="35dp"
-        android:layout_weight="1"
+        android:layout_weight="3"
         android:gravity="center" />
+
+    <ImageButton
+        android:id="@+id/_delete_trading"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/delete_black"/>
 
 </TableRow>

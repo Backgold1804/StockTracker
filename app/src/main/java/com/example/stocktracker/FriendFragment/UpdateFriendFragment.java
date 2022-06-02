@@ -6,24 +6,20 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.example.stocktracker.Data;
-import com.example.stocktracker.Home.DividerItemDecoration;
 import com.example.stocktracker.ListData;
 import com.example.stocktracker.Login.LoginActivity;
 import com.example.stocktracker.Login.UpdateUserActivity;
@@ -39,32 +35,46 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FriendFragment extends Fragment {
+public class UpdateFriendFragment extends Fragment {
 
-    FriendAdapter adapter;
-    ImageButton imageButtonManage;
+    UpdateFriendAdapter adapter;
+    ImageButton imageButtonManage, imageButtonAdd;
     int custUid;
     View view;
 
-    public FriendFragment(int cust_uid) {
+    public UpdateFriendFragment(int cust_uid) {
         this.custUid = cust_uid;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_friend, container, false);
-        adapter = new FriendAdapter(custUid);
+        view = inflater.inflate(R.layout.fragment_update_friend, container, false);
+        adapter = new UpdateFriendAdapter(custUid);
 
         init();
         getData();
 
         imageButtonManage = (ImageButton) view.findViewById(R.id.manage_friend_button);
+        imageButtonAdd = (ImageButton) view.findViewById(R.id.add_friend_button);
 
         imageButtonManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((LoginResultActivity) getActivity()).friendFragmentChange(2);
+                ((LoginResultActivity) getActivity()).friendFragmentChange(1);
+            }
+        });
+
+        imageButtonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFriend();
             }
         });
 
@@ -141,6 +151,72 @@ public class FriendFragment extends Fragment {
         });
     }
 
+    private void addFriend() {
+        EditText editTextAddFriend = new EditText(getContext());
+        LinearLayout container = new LinearLayout(getContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.alert_dialog_internal_margin);
+        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.alert_dialog_internal_margin);
+        editTextAddFriend.setLayoutParams(params);
+        container.addView(editTextAddFriend);
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+
+        dialog.setTitle("친구 추가")
+                .setMessage("친구의 닉네임을 입력하세요.")
+                .setView(container)
+                .setNegativeButton("취소", null)
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String nickname = editTextAddFriend.getText().toString();
+
+                        if ("".equals(nickname)) {
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("알림")
+                                    .setMessage("닉네임을 입력해주세요.")
+                                    .setPositiveButton("확인", null)
+                                    .create().show();
+                        } else {
+                            addFriend(nickname);
+                        }
+                    }
+                });
+
+        AlertDialog alert = dialog.create();
+        alert.show();
+    }
+
+    private void addFriend(String nickname) {
+        RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
+
+        Call<Data> call = networkService.addFriend(custUid, nickname);
+
+        call.enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                Log.d("retrofit", "Add Friend fetch success");
+
+                if (response.isSuccessful() && response.body() != null) {
+                    Data data = response.body();
+
+                    Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
+
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("알림")
+                            .setMessage(data.getResponse_msg())
+                            .setPositiveButton("확인", null)
+                            .create().show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
     private void logout() {
         PreferenceManager.clear(getContext());
 
@@ -188,14 +264,12 @@ public class FriendFragment extends Fragment {
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
 
-                    if ("000".equals(data.getResponse_cd())) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                        builder.setTitle("알림")
-                                .setMessage(data.getResponse_msg())
-                                .setPositiveButton("확인", null)
-                                .create()
-                                .show();
-                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle("알림")
+                            .setMessage(data.getResponse_msg())
+                            .setPositiveButton("확인", null)
+                            .create()
+                            .show();
                 }
             }
 

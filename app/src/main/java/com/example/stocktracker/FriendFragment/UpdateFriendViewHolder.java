@@ -1,13 +1,12 @@
-package com.example.stocktracker.TableFragment;
+package com.example.stocktracker.FriendFragment;
 
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,44 +15,32 @@ import com.example.stocktracker.R;
 import com.example.stocktracker.RetrofitHelper;
 import com.example.stocktracker.RetrofitService;
 
-import java.text.DecimalFormat;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TradingViewHolder extends RecyclerView.ViewHolder {
+public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
 
-    TextView date, exchange, unitPrice, orderAmount;
-    ImageButton imageButtonDelete;
+    TextView textViewNickname;
+    ImageButton imageButtonRemove;
     View view;
+    int custUid;
 
-    TableRow tableRow;
-
-    public TradingViewHolder(@NonNull View view) {
+    public UpdateFriendViewHolder(View view, int cust_uid) {
         super(view);
+
+        this.custUid = cust_uid;
         this.view = view;
-
-        date = view.findViewById(R.id._date);
-        exchange = view.findViewById(R.id._exchange);
-        unitPrice = view.findViewById(R.id._unit_price);
-        orderAmount = view.findViewById(R.id._order_amount);
-        imageButtonDelete = view.findViewById(R.id._delete_trading);
-
-        tableRow = view.findViewById(R.id._table_row);
+        textViewNickname = view.findViewById(R.id.account_nickname);
+        imageButtonRemove = view.findViewById(R.id.remove_friend_button);
     }
 
-    public void onBind(TradingItemData tradingItemData) {
-        DecimalFormat priceFormat = new DecimalFormat("###,###,###");
-        int trading_uid = tradingItemData.getMy_stock_uid();
-        date.setText(tradingItemData.getDate());
-        exchange.setText("B".equals(tradingItemData.getExchange()) ? "매수" : "매도");
-        unitPrice.setText(priceFormat.format(tradingItemData.getOrder_price()));
-        orderAmount.setText(priceFormat.format(tradingItemData.getOrder_amount()));
-
-        imageButtonDelete.setOnClickListener(new View.OnClickListener() {
+    public void onBind(FriendData data) {
+        textViewNickname.setText(data.getNickname());
+        imageButtonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String nickname = data.getNickname();
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("알림")
                         .setMessage("삭제하시겠습니까?")
@@ -61,7 +48,7 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteTrading(trading_uid);
+                                deleteFriend(nickname);
                             }
                         })
                         .create()
@@ -70,15 +57,15 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    private void deleteTrading(int trading_uid) {
+    private void deleteFriend(String nickname) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
-        Call<Data> call = networkService.deleteTrading(trading_uid);
+        Call<Data> call = networkService.deleteFriend(custUid, nickname);
 
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
-                Log.d("retrofit", "Delete Trading fetch Success");
+                Log.d("retrofit", "Delete Friend fetch Success");
 
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();

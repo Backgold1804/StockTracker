@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.example.stocktracker.FriendFragment.FriendFragment;
+import com.example.stocktracker.FriendFragment.UpdateFriendFragment;
 import com.example.stocktracker.Home.MainFragment;
 import com.example.stocktracker.Login.LoginActivity;
 import com.example.stocktracker.TableFragment.TableSetFragment;
@@ -24,34 +25,31 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LoginResultActivity extends AppCompatActivity {
 
-    int custUid;
     BottomNavigationView bottomNavigationView;
-
-    private Context context;
+    int custUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_result);
 
-        context = this;
-
         Intent intent = getIntent();
         custUid = intent.getExtras().getInt("cust_uid");
+        String nickname = intent.getExtras().getString("nickname");
 
         Bundle bundle = intent.getExtras();
 
         /* Bottom Navigation */
         bottomNavigationView = findViewById(R.id.bottomNavi);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new MainFragment(custUid)).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_frame, new MainFragment(custUid, nickname)).commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch ( item.getItemId() ) {
                     case R.id.home_fragment:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MainFragment(custUid)).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MainFragment(custUid, nickname)).commit();
                         break;
                     case R.id.table_fragment:
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new TableSetFragment(custUid)).commit();
@@ -65,6 +63,14 @@ public class LoginResultActivity extends AppCompatActivity {
         });
         /* Bottom Navigation */
 
+    }
+
+    public void friendFragmentChange(int index) {
+        if (index == 1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new FriendFragment(custUid)).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new UpdateFriendFragment(custUid)).commit();
+        }
     }
 
     @Override
