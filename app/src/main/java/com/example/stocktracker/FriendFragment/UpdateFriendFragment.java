@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.stocktracker.Data;
 import com.example.stocktracker.ListData;
@@ -137,6 +138,7 @@ public class UpdateFriendFragment extends Fragment {
                             itemData.setNickname(map.get("nickname").toString());
                             Log.d("TAG", map.get("nickname").toString());
                             adapter.addItem(itemData);
+
                         }
                         init();
                     }
@@ -202,11 +204,13 @@ public class UpdateFriendFragment extends Fragment {
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
 
-                    new AlertDialog.Builder(getContext())
-                            .setTitle("알림")
-                            .setMessage(data.getResponse_msg())
-                            .setPositiveButton("확인", null)
-                            .create().show();
+                    Toast.makeText(getContext(), data.getResponse_msg(), Toast.LENGTH_LONG).show();
+
+                    FriendData friendData = new FriendData();
+                    friendData.setNickname(nickname);
+                    adapter.addItem(friendData);
+
+                    adapter.notifyItemInserted(adapter.getItemCount());
                 }
             }
 

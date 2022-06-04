@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         checkAutoLogin = (CheckBox) findViewById(R.id.auto_login);
 
         context = this;
+//        PreferenceManager.clear(context);
 
         autoId = PreferenceManager.getString(context, "id");
         autoPassword = PreferenceManager.getString(context, "password");
