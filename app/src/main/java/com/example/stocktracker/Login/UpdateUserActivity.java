@@ -48,6 +48,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         editTextFind_id = (EditText) findViewById(R.id.find_id_phrase);
         editTextNickname = (EditText) findViewById(R.id.nickname);
 
+        //  전화번호를 보기 쉽게 설정해주는 Listener
         editTextPhone.addTextChangedListener(new TextWatcher() {
 
             private int beforeLength = 0;
@@ -89,6 +90,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         //회원정보 읽기
         setUserInfo(uid);
 
+        //  회원정보를 Update하는 Listener
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +125,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         });
     }
 
+    //  User의 정보를 불러오는 Method
     private void setUserInfo(int uid) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -131,8 +134,10 @@ public class UpdateUserActivity extends AppCompatActivity {
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
+                //  통신 했을 댸
                 Log.d("retrofit", "Set User Info fetch success");
 
+                //  통신에 성공했을 떄
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
@@ -158,6 +163,7 @@ public class UpdateUserActivity extends AppCompatActivity {
         });
     }
 
+    //  Update를 성공했을 때 원래 Activity로 이동하는 method
     private void UpdateResponse(int uid, String password, String phone, String findId, String nickname) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 

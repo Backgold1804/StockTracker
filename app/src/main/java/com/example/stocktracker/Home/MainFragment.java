@@ -69,9 +69,11 @@ public class MainFragment extends Fragment {
         init();
         getData();
 
+        //  Welcome Text를 설정
         TextView textViewWelcome = (TextView) view.findViewById(R.id.home_welcome_text);
         textViewWelcome.setText(nickname + "님\n안녕하세요!");
 
+        //  toolbar 설정
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -113,6 +115,7 @@ public class MainFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    //  data를 가져옴
     private void getData() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -121,11 +124,16 @@ public class MainFragment extends Fragment {
         call.enqueue(new Callback<ListData>() {
             @Override
             public void onResponse(Call<ListData> call, Response<ListData> response) {
+                //  통신 했을 때
+                Log.d("retrofit", "Select Stock List fetch Success");
+
+                //  통신에 성공 했을 때
                 if (response.isSuccessful() && response.body() != null) {
                     ListData data = response.body();
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
 
+                    //  데이터를 가져왔다면
                     if ("000".equals(data.getResponse_cd())) {
                         for (Map map : data.getDatas()) {
                             int homeAmountPrice = Integer.parseInt(map.get("close_price").toString()) * Integer.parseInt(map.get("holdings").toString());
@@ -158,6 +166,7 @@ public class MainFragment extends Fragment {
         });
     }
 
+    //  logout method
     private void logout() {
         PreferenceManager.clear(getContext());
 
@@ -166,12 +175,14 @@ public class MainFragment extends Fragment {
         startActivity(intent);
     }
 
+    //  회원정보 수정 method
     private void updateUser() {
         Intent intent = new Intent(getContext(), UpdateUserActivity.class);
         intent.putExtra("uid", custUid);
         startActivity(intent);
     }
 
+    //  회원탈퇴 method
     private void deleteUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("알림");
@@ -190,6 +201,7 @@ public class MainFragment extends Fragment {
         builder.show();
     }
 
+    //  회원 정보를 삭제하는 method
     private void deleteCust() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 

@@ -45,10 +45,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         return listData.size();
     }
 
+    //  값을 추가
     public void addItem(Data data) {
         listData.add(data);
     }
 
+    //  총평가금액을 계산하는 method
     public String sumPrice() {
         int sum = 0;
         DecimalFormat priceFormat = new DecimalFormat("###,###,###");
@@ -60,6 +62,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         return priceFormat.format(sum);
     }
 
+    //  수익을 계산하는 method
     public String sumProfitRate() {
         float profitRate = 0;
         int avg = 0;
@@ -78,6 +81,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         return rateFormat.format(profitRate);
     }
 
+    //  수익률을 계산하는 method
     public String sumProfit() {
         int profit = 0;
         int avg = 0;

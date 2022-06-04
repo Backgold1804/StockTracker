@@ -92,7 +92,9 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    //  주이진 자리에 값을 bind
     public void onBind(TableItemData tableItemData, int position, SparseBooleanArray selectedItems) {
+        //  가격과 수익률을 나타내기 위한 format
         DecimalFormat priceFormat = new DecimalFormat("###,###,###");
         DecimalFormat rateFormat = new DecimalFormat("##.##");
 
@@ -138,6 +140,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                         String time = buy_time.getText().toString();
                         // 매수 버튼 구현
 
+                        //  공백이 있는지 확인
                         if (string_price.trim().length() == 0 || string_amount.trim().length() == 0 || date.trim().length() == 0 || time.trim().length() == 0) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                             builder.setTitle("알림")
@@ -150,8 +153,6 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                             int amount = Integer.parseInt(string_amount);
                             putTrading(stock_name, "B", price, amount, date, time);
                             buyDialog.dismiss();
-                            adapter.notifyDataSetChanged();
-                            adapter.getTableFragment().onResume();
                         }
                     }
                 });
@@ -163,6 +164,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                //  날짜를 설정하기 위한 Dialog 설정
                 DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -177,6 +179,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 };
 
+                //  시간을 설정하기 위한 Dialog 설정
                 TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -189,6 +192,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 };
 
+                //  날짜 설정을 눌렀을 때 날짜 Dialog가 나올 수 있게 해주는 Listener
                 buy_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
@@ -201,6 +205,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                //  날짜 설정을 눌렀을 때 날짜 Dialog가 나올 수 있게 해주는 Listener
                 buy_date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -211,6 +216,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                //  시간 설정을 눌렀을 때 시간 Dialog가 나올 수 있게 해주는 Listener
                 buy_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
@@ -228,6 +234,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                //  시간 설정을 눌렀을 때 시간 Dialog가 나올 수 있게 해주는 Listener
                 buy_time.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -276,6 +283,8 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                         String date = sell_date.getText().toString();
                         String time = sell_time.getText().toString();
                         // 매도 버튼 구현
+
+                        //  공백이 있는지 확인
                         if (string_price.trim().length() == 0 || string_amount.trim().length() == 0 || date.trim().length() == 0 || time.trim().length() == 0) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                             builder.setTitle("알림")
@@ -286,6 +295,8 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                         } else {
                             int price = Integer.parseInt(string_price);
                             int amount = Integer.parseInt(string_amount);
+
+                            //  가지고 있는 수량보다 매도 수량이 더 많은지 확인
                             if (amount > Integer.parseInt(holdings.getText().toString())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                                 builder.setTitle("알림")
@@ -296,8 +307,6 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                             } else {
                                 putTrading(stock_name, "S", price, amount, date, time);
                                 sellDialog.dismiss();
-                                adapter.notifyDataSetChanged();
-                                adapter.getTableFragment().onResume();
                             }
                         }
                     }
@@ -310,6 +319,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                //  날짜를 설정하기 위한 Dialog 설정
                 DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -324,6 +334,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 };
 
+                //  시간을 설정하기 위한 Dialog 설정
                 TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -336,6 +347,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 };
 
+                //  날짜 설정을 눌렀을 때 날짜 Dialog가 나올 수 있게 해주는 Listener
                 sell_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
@@ -348,6 +360,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                //  날짜 설정을 눌렀을 때 날짜 Dialog가 나올 수 있게 해주는 Listener
                 sell_date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -358,6 +371,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                //  시간 설정을 눌렀을 때 시간 Dialog가 나올 수 있게 해주는 Listener
                 sell_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
@@ -374,6 +388,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
 
+                //  시간 설정을 눌렀을 때 시간 Dialog가 나올 수 있게 해주는 Listener
                 sell_time.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -397,6 +412,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
         changeVisibility(selectedItems.get(position));
     }
 
+    //  매매내역을 추가하는 method
     public void putTrading(String stock_name, String trading, int price, int amount, String date, String time) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -405,8 +421,13 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
+                //  통신을 했을 때
+                Log.d("retrofit", "Put Trading fetch Success");
+
+                //  통신을 성공적으로 했다면
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();
+                    TradingItemData itemData = new TradingItemData();
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg() + "(putTrading)");
 
@@ -426,6 +447,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    //  RecyclerView를 접었다 폈다 할 수 있게 해주는 Method
     private void changeVisibility(final boolean isExpanded) {
         ValueAnimator va = isExpanded ? ValueAnimator.ofInt(0, 600) : ValueAnimator.ofInt(600, 0);
 

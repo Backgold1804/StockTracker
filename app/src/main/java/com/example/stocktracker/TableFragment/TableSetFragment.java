@@ -142,6 +142,7 @@ public class TableSetFragment extends Fragment {
         return view;
     }
 
+    //  AutoCompleteTextView에 값을 bind하기 위한 method
     public void setStockList() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -170,6 +171,7 @@ public class TableSetFragment extends Fragment {
         });
     }
 
+    //  새로운 종목을 추가할 수 있는 Dialog
     private void showDialog() {
         final Dialog createDialog = new Dialog(view.getContext());
         createDialog.setContentView(R.layout.create_dialog);
@@ -199,6 +201,8 @@ public class TableSetFragment extends Fragment {
                 String time = buy_time.getText().toString();
 
                 // 매수 버튼 구현
+
+                //  정보가 모두 입력되었는지 확인
                 if (stock_name.trim().length() == 0 || string_price.trim().length() == 0 || string_amount.trim().length() == 0 || date.trim().length() == 0 || time.trim().length() == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setTitle("알림")
@@ -211,9 +215,6 @@ public class TableSetFragment extends Fragment {
                     int amount = Integer.parseInt(string_amount);
                     putStock(stock_name, price, amount, date, time);
                     createDialog.dismiss();
-                    adapter.clear();
-                    getData();
-                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -225,6 +226,7 @@ public class TableSetFragment extends Fragment {
             }
         });
 
+        //  날짜를 설정하기 위한 Dialog 설정
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -239,6 +241,7 @@ public class TableSetFragment extends Fragment {
             }
         };
 
+        //  시간을 설정하기 위한 Dialog 설정
         TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -251,6 +254,7 @@ public class TableSetFragment extends Fragment {
             }
         };
 
+        //  날짜 설정을 눌렀을 때 날짜 Dialog가 나올 수 있게 해주는 Listener
         buy_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -263,6 +267,7 @@ public class TableSetFragment extends Fragment {
             }
         });
 
+        //  날짜 설정을 눌렀을 때 날짜 Dialog가 나올 수 있게 해주는 Listener
         buy_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,6 +278,7 @@ public class TableSetFragment extends Fragment {
             }
         });
 
+        //  시간 설정을 눌렀을 때 시간 Dialog가 나올 수 있게 해주는 Listener
         buy_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -290,6 +296,7 @@ public class TableSetFragment extends Fragment {
             }
         });
 
+        //  시간 설정을 눌렀을 때 시간 Dialog가 나올 수 있게 해주는 Listener
         buy_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -307,6 +314,7 @@ public class TableSetFragment extends Fragment {
         createDialog.show();
     }
 
+    //  새로운 종목을 추가하는 method
     public void putStock(String stock_name, int price, int amount, String date, String time) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -326,6 +334,13 @@ public class TableSetFragment extends Fragment {
                             .setPositiveButton("확인", null)
                             .create()
                             .show();
+
+                    //  RecyclerView를 새로고침
+                    if ("000".equals(data.getResponse_cd())) {
+                        adapter.clear();
+                        getData();
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
 
@@ -342,6 +357,7 @@ public class TableSetFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        //  종목별로 구분이 가능한 선을 그려줌
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
@@ -357,13 +373,16 @@ public class TableSetFragment extends Fragment {
         call.enqueue(new Callback<ListData>() {
             @Override
             public void onResponse(Call<ListData> call, Response<ListData> response) {
+                //  통신을 했을 때
                 Log.d("retrofit", "Find Stock List fetch success");
 
+                //  통신을 성공했을 때
                 if (response.isSuccessful() && response.body() != null) {
                     ListData data = response.body();
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg() + "(selectStockList)");
 
+                    //  Data를 가져옴
                     if ("000".equals(data.getResponse_cd())) {
                         adapter.clear();
                         for (Map map : data.getDatas()) {
@@ -392,6 +411,7 @@ public class TableSetFragment extends Fragment {
         });
     }
 
+    //  logout을 할 수 있는 method
     private void logout() {
         PreferenceManager.clear(getContext());
 
@@ -400,12 +420,14 @@ public class TableSetFragment extends Fragment {
         startActivity(intent);
     }
 
+    //  User 정보를 update할 수 있는 method
     private void updateUser() {
         Intent intent = new Intent(getContext(), UpdateUserActivity.class);
         intent.putExtra("uid", custUid);
         startActivity(intent);
     }
 
+    //  탈퇴를 할 수 있는 method
     private void deleteUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("알림");
@@ -424,6 +446,7 @@ public class TableSetFragment extends Fragment {
         builder.show();
     }
 
+    //  탈퇴를 실행시키는 method
     private void deleteCust() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 

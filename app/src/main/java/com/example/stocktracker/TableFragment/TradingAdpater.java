@@ -31,11 +31,20 @@ public class TradingAdpater extends RecyclerView.Adapter<TradingViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TradingViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.onBind(listData.get(position));
+        holder.onBind(listData.get(position), position);
     }
 
     @Override
     public int getItemCount() {
         return listData.size();
+    }
+
+    public void addItem(TradingItemData itemData) {
+        listData.add(itemData);
+    }
+
+    //  list에 들어있는 값을 지움
+    public void deleteItem(int position) {
+        listData.remove(position);
     }
 }

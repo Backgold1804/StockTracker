@@ -61,6 +61,7 @@ public class FriendFragment extends Fragment {
 
         imageButtonManage = (ImageButton) view.findViewById(R.id.manage_friend_button);
 
+        //  친구 정보를 수정할 수 있는 Fragment로 이동하는 Listener
         imageButtonManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +69,7 @@ public class FriendFragment extends Fragment {
             }
         });
 
+        //  하단 toolbar
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -106,6 +108,7 @@ public class FriendFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    //  data를 가져옴
     private void getData() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -114,8 +117,10 @@ public class FriendFragment extends Fragment {
         call.enqueue(new Callback<ListData>() {
             @Override
             public void onResponse(Call<ListData> call, Response<ListData> response) {
+                //  통신 했을 때
                 Log.d("retrofit", "Select Friend fetch success");
 
+                //  통신에 성공했을 때
                 if (response.isSuccessful() && response.body() != null) {
                     ListData data = response.body();
 
@@ -141,6 +146,7 @@ public class FriendFragment extends Fragment {
         });
     }
 
+    //  logout method
     private void logout() {
         PreferenceManager.clear(getContext());
 
@@ -149,12 +155,14 @@ public class FriendFragment extends Fragment {
         startActivity(intent);
     }
 
+    //  회원 정보 수정 method
     private void updateUser() {
         Intent intent = new Intent(getContext(), UpdateUserActivity.class);
         intent.putExtra("uid", custUid);
         startActivity(intent);
     }
 
+    //  회원 탈퇴 method
     private void deleteUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("알림");
@@ -173,6 +181,7 @@ public class FriendFragment extends Fragment {
         builder.show();
     }
 
+    //  회원 정보를 삭제하는 method
     private void deleteCust() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
