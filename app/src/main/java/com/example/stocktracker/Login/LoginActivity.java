@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         context = this;
 //        PreferenceManager.clear(context);
 
+        //  autoLogin을 위한 설정
         autoId = PreferenceManager.getString(context, "id");
         autoPassword = PreferenceManager.getString(context, "password");
 
@@ -61,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             loginResponse();
         }
 
+        //  Login 기능을 처리하는 Listener
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         textViewFindID = (TextView) findViewById(R.id.find_id);
         textViewFindPassword = (TextView) findViewById(R.id.find_password);
 
+        //  JoinActivity로 넘어가기 위한 Listener
         textViewJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //  FindIDActivity로 넘어가기 위한 Method
         textViewFindID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //  FindPasswordActivity로 넘어가기 위한 Method
         textViewFindPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,10 +114,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //  login시도를 하는 method
     public void loginResponse() {
         String id;
         String password;
 
+        //  autoLogin으로 login
         if ("".equals(autoId) || "".equals(autoPassword)) {
             id = editTextID.getText().toString();
             password = editTextPassword.getText().toString();
@@ -128,8 +135,10 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
+                //  통신을 했다면
                 Log.d("retrofit", "Login Data fetch success");
 
+                //  통신에 성공했다면
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();
 
@@ -140,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                             PreferenceManager.setString(context, "password", password);
                         }
 
+                        //  cust_uid와 nickname을 저장하여 LoginResultActivity로 이동
                         Intent intent = new Intent(LoginActivity.this, LoginResultActivity.class);
                         intent.putExtra("cust_uid", Integer.parseInt(data.getDatas().get("uid").toString()));
                         intent.putExtra("nickname", data.getDatas().get("nickname").toString());

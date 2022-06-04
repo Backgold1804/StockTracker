@@ -17,6 +17,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     private List<FriendData> listData = new ArrayList<>();
     private int custUid;
+    private OnItemClickListener itemClickListener;
 
     FriendAdapter(int cust_uid) {
         this.custUid = cust_uid;
@@ -24,9 +25,10 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     @NonNull
     @Override
-    public FriendViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FriendViewHolder onCreateViewHolder(ViewGroup parent, int position) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.frienditem, parent, false);
-        return new FriendViewHolder(view);
+        FriendViewHolder holder = new FriendViewHolder(view);
+        return holder;
     }
 
     @Override

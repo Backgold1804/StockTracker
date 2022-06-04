@@ -50,14 +50,6 @@
             android:layout_height="wrap_content"
             android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:onClick="onSortClicked"
-            android:text="Sort" />
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -66,6 +58,6 @@
         android:layout_height="match_parent"
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="60dp"
         tools:listitem="@layout/listitem" />
 </LinearLayout>

@@ -36,6 +36,7 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
         imageButtonRemove = view.findViewById(R.id.remove_friend_button);
     }
 
+    //  값을 bind
     public void onBind(FriendData data, int position) {
         textViewNickname.setText(data.getNickname());
         imageButtonRemove.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +59,7 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    //  친구를 삭제하는 method
     private void deleteFriend(String nickname, int position) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -66,8 +68,10 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
+                //  통신 했을 때
                 Log.d("retrofit", "Delete Friend fetch Success");
 
+                //  통신에 성공 했을 때
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();
 

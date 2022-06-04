@@ -90,6 +90,7 @@ public class TableFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        //  종목에 구분을 위하여 구분선을 추가
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
@@ -105,8 +106,10 @@ public class TableFragment extends Fragment {
         call.enqueue(new Callback<ListData>() {
             @Override
             public void onResponse(Call<ListData> call, Response<ListData> response) {
+                //  통신을 했으면
                 Log.d("retrofit", "Find Stock List fetch success");
 
+                //  통신을 성공했으면
                 if (response.isSuccessful() && response.body() != null) {
                     ListData data = response.body();
 
@@ -114,6 +117,7 @@ public class TableFragment extends Fragment {
 
                     if ("000".equals(data.getResponse_cd())) {
                         adapter.clear();
+                        //  값을 추가
                         for (Map map : data.getDatas()) {
                             TableItemData itemData = new TableItemData();
                             itemData.setMy_stock_uid(Integer.parseInt(map.get("my_stock_uid").toString()));
@@ -129,6 +133,7 @@ public class TableFragment extends Fragment {
                             adapter.addItem(itemData);
                         }
 
+                        //  총금액과 수익률을 설정
                         TextView totalamount = (TextView) view.findViewById(R.id.total_amount);
                         TextView totalprofit = (TextView) view.findViewById(R.id.total_profit);
                         TextView totalprofitrate = (TextView) view.findViewById(R.id.total_profit_rate);
@@ -147,6 +152,4 @@ public class TableFragment extends Fragment {
             }
         });
     }
-
-
 }

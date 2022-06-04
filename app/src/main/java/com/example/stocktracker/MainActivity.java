@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         Handler handler = new Handler();
 
+        //  MainActivity에 3초간 머무른 후 LoginActivity로 이동하기
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
