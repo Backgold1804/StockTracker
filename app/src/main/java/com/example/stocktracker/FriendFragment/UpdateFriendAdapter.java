@@ -29,7 +29,7 @@ public class UpdateFriendAdapter extends RecyclerView.Adapter<UpdateFriendViewHo
 
     @Override
     public void onBindViewHolder(UpdateFriendViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.onBind(listData.get(position));
+        holder.onBind(listData.get(position), position);
     }
 
     @Override
@@ -39,5 +39,9 @@ public class UpdateFriendAdapter extends RecyclerView.Adapter<UpdateFriendViewHo
 
     public void addItem(FriendData data) {
         listData.add(data);
+    }
+
+    public void deleteItem(int position) {
+        listData.remove(position);
     }
 }

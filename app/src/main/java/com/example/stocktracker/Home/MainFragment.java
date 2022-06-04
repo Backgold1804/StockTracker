@@ -70,7 +70,7 @@ public class MainFragment extends Fragment {
         getData();
 
         TextView textViewWelcome = (TextView) view.findViewById(R.id.home_welcome_text);
-        textViewWelcome.setText(nickname + "님 안녕하세요!");
+        textViewWelcome.setText(nickname + "님\n안녕하세요!");
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
