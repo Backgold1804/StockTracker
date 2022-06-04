@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +36,7 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
         imageButtonRemove = view.findViewById(R.id.remove_friend_button);
     }
 
-    public void onBind(FriendData data) {
+    public void onBind(FriendData data, int position) {
         textViewNickname.setText(data.getNickname());
         imageButtonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +49,7 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteFriend(nickname);
+                                deleteFriend(nickname, position);
                             }
                         })
                         .create()
@@ -57,7 +58,7 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    private void deleteFriend(String nickname) {
+    private void deleteFriend(String nickname, int position) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
         Call<Data> call = networkService.deleteFriend(custUid, nickname);
@@ -72,12 +73,14 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setTitle("알림")
-                            .setMessage(data.getResponse_msg())
-                            .setPositiveButton("확인", null)
-                            .create()
-                            .show();
+                    Toast.makeText(view.getContext(), data.getResponse_msg(), Toast.LENGTH_LONG).show();
+
+                    FriendData friendData = new FriendData();
+                    friendData.setNickname(nickname);
+
+                    UpdateFriendAdapter adapter = (UpdateFriendAdapter) getBindingAdapter();
+                    adapter.deleteItem(position);
+                    adapter.notifyItemRemoved(position);
                 }
             }
 
