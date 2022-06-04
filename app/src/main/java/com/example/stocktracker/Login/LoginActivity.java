@@ -141,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(LoginActivity.this, LoginResultActivity.class);
                         intent.putExtra("cust_uid", Integer.parseInt(data.getDatas().get("uid").toString()));
+                        intent.putExtra("nickname", data.getDatas().get("nickname").toString());
                         startActivity(intent);
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

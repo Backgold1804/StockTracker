@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FriendFragment.FriendFragment">
+    tools:context=".FriendFragment.UpdateFriendFragment">
 
     <include layout="@layout/toolbar" />
 
@@ -22,6 +22,16 @@
             android:layout_marginStart="40sp"
             android:layout_marginBottom="20dp"
             android:text="@string/friend_text"/>
+
+        <ImageButton android:id="@+id/add_friend_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10sp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/add_accounts_black"/>
 
         <ImageButton android:id="@+id/manage_friend_button"
             android:layout_width="0dp"
@@ -42,6 +52,6 @@
         android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginBottom="40dp"
-        tools:listitem="@layout/frienditem" />
+        tools:listitem="@layout/updatefrienditem" />
 
 </LinearLayout>

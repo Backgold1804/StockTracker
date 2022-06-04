@@ -27,7 +27,7 @@ public class ViewpagerFragmentAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0: return new TableFragment(custUid);
-            case 1: return new ChartFragment();
+            case 1: return new ChartFragment(custUid);
             default: return new TableFragment(custUid);
         }
     }

@@ -9,32 +9,41 @@
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/drawable/layout_gray.xml" value="0.2655" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_find_id.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_find_password.xml" value="0.18489583333333334" />
-        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_join.xml" value="0.1" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_join.xml" value="0.33" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_login.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_login_result.xml" value="0.33" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_main.xml" value="0.18489583333333334" />
-        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/buy_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_revise.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/activity_update_user.xml" value="0.34739583333333335" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/buy_dialog.xml" value="0.33" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/create_dialog.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_chart.xml" value="0.3619791666666667" />
-        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_friend.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_friend.xml" value="0.1" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_main.xml" value="0.33" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_table.xml" value="0.26495726495726496" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_table_set.xml" value="0.17603850050658562" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/fragment_update_friend.xml" value="0.29713552800342025" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/frienditem.xml" value="0.26201269265639165" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/listitem.xml" value="0.33" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/sell_dialog.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/table_toolbar.xml" value="0.29615384615384616" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/tableitem.xml" value="0.17603850050658562" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/toolbar.xml" value="0.18385416666666668" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/tradingitem.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/layout/updatefrienditem.xml" value="0.29713552800342025" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/menu/app_menu.xml" value="0.271484375" />
         <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/menu/bottom_menu.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/grust/AndroidStudioProjects/StockTracker/app/src/main/res/menu/include_add_menu.xml" value="0.3609375" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3155" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3155" />
         <entry key="app/src/main/res/layout/activity_find_id.xml" value="0.2640625" />
-        <entry key="app/src/main/res/layout/activity_login_result.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_login_result.xml" value="0.37771739130434784" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_update_user.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res/layout/buy_dialog.xml" value="0.25987841945288753" />
         <entry key="app/src/main/res/layout/create_dialog.xml" value="0.25987841945288753" />
         <entry key="app/src/main/res/layout/fragment_chart.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_chart.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_friend.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.2640625" />
@@ -42,15 +51,12 @@
         <entry key="app/src/main/res/layout/fragment_table_list.xml" value="0.4134963768115942" />
         <entry key="app/src/main/res/layout/fragment_table_set.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/listitem.xml" value="0.4076086956521739" />
-        <entry key="app/src/main/res/layout/sell_dialog.xml" value="0.25987841945288753" />
-        <entry key="app/src/main/res/layout/table_toolbar.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res/layout/tableitem.xml" value="0.30572916666666666" />
         <entry key="app/src/main/res/layout/tablelist_footer.xml" value="0.4578804347826087" />
         <entry key="app/src/main/res/layout/tablelist_header.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/layout/tablelist_item.xml" value="0.4578804347826087" />
         <entry key="app/src/main/res/layout/tabletitle.xml" value="0.534375" />
         <entry key="app/src/main/res/layout/test.xml" value="0.30572916666666666" />
-        <entry key="app/src/main/res/layout/toolbar.xml" value="0.30104166666666665" />
         <entry key="app/src/main/res/layout/tradeitem.xml" value="0.1" />
         <entry key="app/src/main/res/layout/tradingitem.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.33125" />

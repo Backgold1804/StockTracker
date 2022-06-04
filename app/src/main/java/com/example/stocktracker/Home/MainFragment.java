@@ -30,6 +30,8 @@ import com.example.stocktracker.R;
 import com.example.stocktracker.RetrofitHelper;
 import com.example.stocktracker.RetrofitService;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 import java.util.Map;
 
@@ -43,10 +45,12 @@ public class MainFragment extends Fragment {
     MainAdapter adapter;
 
     private int custUid;
+    private String nickname;
     private View view;
 
-    public MainFragment(int cust_uid) {
+    public MainFragment(int cust_uid, String nickname) {
         this.custUid = cust_uid;
+        this.nickname = nickname;
     }
 
     @Override
@@ -64,6 +68,9 @@ public class MainFragment extends Fragment {
 
         init();
         getData();
+
+        TextView textViewWelcome = (TextView) view.findViewById(R.id.home_welcome_text);
+        textViewWelcome.setText(nickname + "님 안녕하세요!");
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -123,6 +130,7 @@ public class MainFragment extends Fragment {
                         for (Map map : data.getDatas()) {
                             int homeAmountPrice = Integer.parseInt(map.get("close_price").toString()) * Integer.parseInt(map.get("holdings").toString());
                             int homeUserPrice = Integer.parseInt(map.get("blended_price").toString()) * Integer.parseInt(map.get("holdings").toString());
+
                             Data itemData = new Data();
                             itemData.setHome_stock_name(map.get("stock_name").toString());
                             itemData.setHome_amount_price(homeAmountPrice);

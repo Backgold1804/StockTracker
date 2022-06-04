@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,6 +48,44 @@ public class UpdateUserActivity extends AppCompatActivity {
         editTextFind_id = (EditText) findViewById(R.id.find_id_phrase);
         editTextNickname = (EditText) findViewById(R.id.nickname);
 
+        editTextPhone.addTextChangedListener(new TextWatcher() {
+
+            private int beforeLength = 0;
+            private int afterLength = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                beforeLength = s.length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() <= 0) {
+                    return;
+                }
+
+                afterLength = s.length();
+
+                if (beforeLength > afterLength) {
+                    if (s.toString().endsWith("-")) {
+                        editTextPhone.setText(s.toString().substring(0, s.length() - 1));
+                    }
+                } else if (beforeLength < afterLength) {
+                    if (afterLength == 5 && s.toString().indexOf("-") < 0) {
+                        editTextPhone.setText(s.toString().subSequence(0, 3) + "-" + s.toString().substring(3, s.length()));
+                    } else if (afterLength == 10) {
+                        editTextPhone.setText(s.toString().subSequence(0, 8) + "-" + s.toString().substring(8, s.length()));
+                    }
+                }
+                editTextPhone.setSelection(editTextPhone.length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         //회원정보 읽기
         setUserInfo(uid);
 
@@ -57,6 +97,8 @@ public class UpdateUserActivity extends AppCompatActivity {
                 String phone = editTextPhone.getText().toString();
                 String findId = editTextFind_id.getText().toString();
                 String nickname = editTextNickname.getText().toString();
+
+                phone = phone.replace("-", "");
 
                 if (password.trim().length() == 0 || passwordCheck.trim().length() == 0 || phone.trim().length() == 0 || findId.trim().length() == 0 || nickname.trim().length() == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(UpdateUserActivity.this);
@@ -96,16 +138,15 @@ public class UpdateUserActivity extends AppCompatActivity {
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
 
                     if ("000".equals(data.getResponse_cd())) {
-
+                        String stringPhone = data.getDatas().get("phone").toString();
+                        String phone = stringPhone.substring(0, 3) + "-" + stringPhone.substring(3, 7) + "-" + stringPhone.substring(7);
 
                         textViewId.setText(data.getDatas().get("id").toString());
                         editTextPassword.setText(data.getDatas().get("password").toString());
                         editTextPassword_check.setText(data.getDatas().get("password").toString());
-                        editTextPhone.setText(data.getDatas().get("phone").toString());
+                        editTextPhone.setText(phone);
                         editTextFind_id.setText(data.getDatas().get("find_id").toString());
                         editTextNickname.setText(data.getDatas().get("nickname").toString());
-
-
                     }
                 }
             }
@@ -135,6 +176,7 @@ public class UpdateUserActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), data.getResponse_msg(), Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(UpdateUserActivity.this, LoginResultActivity.class);
                         intent.putExtra("cust_uid", uid);
+                        intent.putExtra("nickname", nickname);
                         startActivity(intent);
                     }
                 }

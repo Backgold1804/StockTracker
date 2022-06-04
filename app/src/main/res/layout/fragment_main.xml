@@ -8,12 +8,19 @@
 
     <include layout="@layout/toolbar" />
 
+    <TextView android:id="@+id/home_welcome_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="40sp"
+        android:layout_marginBottom="10dp" />
+
     <TextView
         android:id="@+id/home_amount_total_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:layout_marginTop="60dp"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="10dp"
         android:text="@string/home_total_price"
@@ -26,8 +33,7 @@
         android:textStyle="bold"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="10dp"
-        android:textSize="30sp"
-        android:text="TextView" />
+        android:textSize="30sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,8 +48,7 @@
             android:layout_width="0dp"
             android:layout_weight="4"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:text="Fragment" />
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/button"

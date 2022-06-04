@@ -1,11 +1,20 @@
 package com.example.stocktracker.TableFragment;
 
 public class TradingItemData {
+    int my_stock_uid;
     String date;
     String stock_name;
     String exchange;
     int order_price;
     int order_amount;
+
+    public int getMy_stock_uid() {
+        return my_stock_uid;
+    }
+
+    public void setMy_stock_uid(int my_stock_uid) {
+        this.my_stock_uid = my_stock_uid;
+    }
 
     public String getDate() {
         return date;
