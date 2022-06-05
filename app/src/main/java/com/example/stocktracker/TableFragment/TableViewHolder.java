@@ -20,7 +20,10 @@ import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.stocktracker.Data;
 import com.example.stocktracker.ListData;
@@ -63,7 +66,6 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
 
         context = view.getContext();
         this.adapter = tableAdapter;
-
         this.custUid = cust_uid;
 
         country = view.findViewById(R.id.country);
@@ -75,7 +77,6 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
         profitRate = view.findViewById(R.id.profit_rate);
         holdings = view.findViewById(R.id.holdings);
         amountPrice = view.findViewById(R.id.amount_price);
-
 
         linearLayout = view.findViewById(R.id.linear_layout);
         visibleLayout = view.findViewById(R.id.visible_layout);
@@ -97,6 +98,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
         //  가격과 수익률을 나타내기 위한 format
         DecimalFormat priceFormat = new DecimalFormat("###,###,###");
         DecimalFormat rateFormat = new DecimalFormat("##.##");
+        int amount_price = tableItemData.getCurrent_price() * tableItemData.getHoldings();
 
         country.setText(tableItemData.getCountry());
         stockName.setText(tableItemData.getStock_name());
@@ -106,7 +108,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
         profit.setText(priceFormat.format(tableItemData.getProfit() * tableItemData.getHoldings()));
         profitRate.setText(rateFormat.format(tableItemData.getProfit_rate()) + "%");
         holdings.setText(String.valueOf(tableItemData.getHoldings()));
-        amountPrice.setText(priceFormat.format(tableItemData.getCurrent_price() * tableItemData.getHoldings()));
+        amountPrice.setText(priceFormat.format(amount_price));
 
         /* 매매 Dialog */
         buyButton.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +153,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                         } else {
                             int price = Integer.parseInt(string_price);
                             int amount = Integer.parseInt(string_amount);
-                            putTrading(stock_name, "B", price, amount, date, time);
+                            putTrading(stock_name, "B", price, amount, date, time, position);
                             buyDialog.dismiss();
                         }
                     }
@@ -305,7 +307,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
                                         .create()
                                         .show();
                             } else {
-                                putTrading(stock_name, "S", price, amount, date, time);
+                                putTrading(stock_name, "S", price, amount, date, time, position);
                                 sellDialog.dismiss();
                             }
                         }
@@ -413,7 +415,7 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
     }
 
     //  매매내역을 추가하는 method
-    public void putTrading(String stock_name, String trading, int price, int amount, String date, String time) {
+    public void putTrading(String stock_name, String trading, int price, int amount, String date, String time, int position) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
         Call<Data> call = networkService.putTrading(custUid, stock_name, trading, price, amount, date, time);
@@ -431,12 +433,22 @@ public class TableViewHolder extends RecyclerView.ViewHolder {
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg() + "(putTrading)");
 
+                    itemData.setOrder_price(Integer.parseInt(data.getDatas().get("order_price").toString().replace(".0", "")));
+                    itemData.setOrder_amount(Integer.parseInt(data.getDatas().get("order_amount").toString().replace(".0", "")));
+                    itemData.setDate(data.getDatas().get("insert_date").toString().split(" ")[0]);
+                    itemData.setExchange(data.getDatas().get("trading").toString());
+                    itemData.setStock_name(stock_name);
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("알림")
                             .setMessage(data.getResponse_msg())
                             .setPositiveButton("확인", null)
                             .create()
                             .show();
+                    adapter.adapter.addItem(itemData);
+                    adapter.setItem(trading, itemData, position);
+                    adapter.adapter.notifyDataSetChanged();
+                    adapter.notifyItemChanged(position);
                 }
             }
 

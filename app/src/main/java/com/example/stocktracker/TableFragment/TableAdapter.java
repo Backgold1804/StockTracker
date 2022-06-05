@@ -149,6 +149,22 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         listData.add(tableItemData);
     }
 
+    void setItem(String trading, TradingItemData tradingItemData, int position) {
+        int temp_price = listData.get(position).getBlended_price() * listData.get(position).getHoldings();
+        int holdings = "B".equals(trading) ? listData.get(position).getHoldings() + tradingItemData.getOrder_amount() : listData.get(position).getHoldings() - tradingItemData.getOrder_amount();
+        int amount_price = holdings * listData.get(position).getCurrent_price();
+        int order_amount = tradingItemData.getOrder_amount() * tradingItemData.getOrder_price();
+        int blended_price = "B".equals(trading) ? (temp_price + order_amount) / holdings : listData.get(position).getBlended_price();
+        int profit = listData.get(position).getCurrent_price() - blended_price;
+        float profit_rate = (float) profit / blended_price * 100;
+
+        listData.get(position).setHoldings(holdings);
+        listData.get(position).setAmount_price(amount_price);
+        listData.get(position).setBlended_price(blended_price);
+        listData.get(position).setProfit(profit);
+        listData.get(position).setProfit_rate(profit_rate);
+    }
+
     public void clear() {
         listData.clear();
         prePosition = -1;
