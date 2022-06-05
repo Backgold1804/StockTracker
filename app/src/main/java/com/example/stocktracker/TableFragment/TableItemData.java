@@ -12,6 +12,7 @@ public class TableItemData {
     int blended_price;
     int holdings;
     int profit;
+    int amount_price;
     float profit_rate;
     List<TradingItemData> data_list;
 
@@ -85,6 +86,14 @@ public class TableItemData {
 
     public void setProfit_rate(float profit_rate) {
         this.profit_rate = profit_rate;
+    }
+
+    public int getAmount_price() {
+        return amount_price;
+    }
+
+    public void setAmount_price(int amount_price) {
+        this.amount_price = amount_price;
     }
 
     public List<TradingItemData> getData_list() {
