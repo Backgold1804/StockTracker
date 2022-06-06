@@ -51,6 +51,8 @@ public class ChartFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chart, container, false);
         getTestData();
+//        getData();
+
         calcHoldingWeight();
 
         PieChart pieChart = view.findViewById(R.id.PieChart);
@@ -72,6 +74,7 @@ public class ChartFragment extends Fragment {
         return view;
     }
 
+    // 보유 비중 계산
     private void calcHoldingWeight() {
         int sum = 0;
         for (int i = 0; i < chartData.size(); i++) {
@@ -105,6 +108,7 @@ public class ChartFragment extends Fragment {
         chartData.add(temp);
     }
 
+    // Data 불러오기
     private void getData() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
