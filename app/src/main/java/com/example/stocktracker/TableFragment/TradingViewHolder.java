@@ -29,12 +29,10 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
     View view;
 
     TableRow tableRow;
-    TableAdapter tableAdapter;
 
-    public TradingViewHolder(@NonNull View view, TableAdapter tableAdapter) {
+    public TradingViewHolder(@NonNull View view) {
         super(view);
         this.view = view;
-        this.tableAdapter = tableAdapter; // 갱신을 위한 초기화
 
         date = view.findViewById(R.id._date);
         exchange = view.findViewById(R.id._exchange);

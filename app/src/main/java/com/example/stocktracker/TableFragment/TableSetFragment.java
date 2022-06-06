@@ -144,34 +144,6 @@ public class TableSetFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() { // 새로운 데이터 추가 후 갱신하기 위해
-        super.onResume();
-        tabLayout = view.findViewById(R.id.tab_layout);
-        viewPager = view.findViewById(R.id.viewPager);
-        //피드 구성하는 탭레이아웃 + 뷰페이저
-        //커스텀 어댑터 생성
-        viewpagerFragmentAdapter = new ViewpagerFragmentAdapter(getChildFragmentManager(), 2, custUid);
-        viewPager.setAdapter(viewpagerFragmentAdapter);
-        viewPager.setCurrentItem(tabCurrentIdx);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                tabCurrentIdx = tab.getPosition();
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
-
     public void setStockList() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 

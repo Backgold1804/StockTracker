@@ -86,7 +86,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.recyclerView.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new TradingAdpater(itemData.getData_list(), this);
+        adapter = new TradingAdpater(itemData.getData_list());
 
         //  구분선 추가
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(holder.recyclerView.getContext(), layoutManager.getOrientation());
