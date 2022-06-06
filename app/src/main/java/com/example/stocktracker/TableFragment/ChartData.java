@@ -4,7 +4,6 @@ public class ChartData {
     private String chart_stock_name;
     private int chart_current_price;
     private int chart_holdings;
-    private float chart_profit_rate;
     private float chart_holding_weight;
 
     public String getChart_stock_name() {
@@ -29,14 +28,6 @@ public class ChartData {
 
     public void setChart_holdings(int chart_holdings) {
         this.chart_holdings = chart_holdings;
-    }
-
-    public float getChart_profit_rate() {
-        return chart_profit_rate;
-    }
-
-    public void setChart_profit_rate(float chart_profit_rate) {
-        this.chart_profit_rate = chart_profit_rate;
     }
 
     public float getChart_holding_weight() {

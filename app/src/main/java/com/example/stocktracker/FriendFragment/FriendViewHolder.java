@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stocktracker.ListData;
@@ -15,10 +16,13 @@ import com.example.stocktracker.R;
 import com.example.stocktracker.RetrofitHelper;
 import com.example.stocktracker.RetrofitService;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +84,7 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
     private void setChart(View v, int userUid, int size, BarEntry entry){
         HorizontalBarChart stackedChart;
         drawDialog(v);
-        if (custUid == userUid)
+        if (this.custUid == userUid)
             stackedChart = (HorizontalBarChart) chartDialog.findViewById(R.id.my_chart);
         else
             stackedChart = (HorizontalBarChart) chartDialog.findViewById(R.id.friend_chart);
@@ -89,10 +93,30 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
         stackedChart.getAxisRight().setMaxWidth(1.0f);
 
         XAxis xAxis = stackedChart.getXAxis();
-        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawAxisLine(true);
         xAxis.setDrawLabels(false);
 
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setLabelCount(size, true);
+        //xAxis.setValueFormatter(new MyXAxisValueFormatter(size));
+        xAxis.setGranularity(1.0f);
 
+
+//        stackedChart.setDescription(false);
+        Legend l = stackedChart.getLegend();
+        l.setEnabled(true);
+        l.setWordWrapEnabled(true);
+        l.setYEntrySpace(1.0f);
+        LegendEntry l1 = new LegendEntry("QTotalAvgList", Legend.LegendForm.LINE, 10f, 2f, null, Color.parseColor("#0000FF"));
+        LegendEntry l2 = new LegendEntry("QAmpTotalAvgList", Legend.LegendForm.LINE, 10f, 2f, null, Color.parseColor("#FF8000"));
+
+        stackedChart.setVisibility(View.VISIBLE);
+        stackedChart.animateXY(1000, 1000);
+        stackedChart.getDescription().setEnabled(false);
+        stackedChart.setExtraOffsets(-10, -10, -10, -10);
+        stackedChart.setDrawGridBackground(false);
+        stackedChart.setDrawBarShadow(false);
+        stackedChart.setDrawValueAboveBar(true);
 
 
         ArrayList<BarEntry> dataList = new ArrayList<BarEntry>();
@@ -105,10 +129,11 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
             barDataSet = new BarDataSet(dataList, "내 종목 비중");
         else
             barDataSet = new BarDataSet(dataList, "친구 종목 비중");
-        barDataSet.setColors(randomColor(size));
+        barDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
         BarData barData = new BarData(barDataSet);
         stackedChart.setData(barData);
+        stackedChart.invalidate();
     }
 
     private void getData(int userUid, View v) {
@@ -162,15 +187,6 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
                 t.printStackTrace();
             }
         });
-    }
-
-    private int[] randomColor(int size) {
-        int[] colors = new int[size];
-        for (int i = 0; i < size; i++) {
-            Random random = new Random();
-            colors[i] = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
-        }
-        return colors;
     }
 
     public float[] toFloatArray(ArrayList<Float> arrayList) {
