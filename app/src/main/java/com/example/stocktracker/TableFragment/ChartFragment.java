@@ -60,17 +60,21 @@ public class ChartFragment extends Fragment {
         PieChart pieChart = view.findViewById(R.id.pieChart);
         pieChart.setUsePercentValues(true);
         pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setNoDataText("보유중인 종목이 없습니다.");
+        pieChart.setNoDataTextColor(Color.BLACK);
         entries = new ArrayList<>();
 
         for (int i = 0; i < chartData.size(); i++) {
             entries.add(new PieEntry(chartData.get(i).getChart_holding_weight(), chartData.get(i).getChart_stock_name()));
         }
 
-        PieDataSet set = new PieDataSet(entries, "보유비중");
-        set.setColors(ColorTemplate.JOYFUL_COLORS);
-        PieData data = new PieData(set);
-        data.setValueFormatter(new PercentFormatter());
-        pieChart.setData(data);
+        if (entries.size() > 0) {
+            PieDataSet set = new PieDataSet(entries, "보유비중");
+            set.setColors(ColorTemplate.JOYFUL_COLORS);
+            PieData data = new PieData(set);
+            data.setValueFormatter(new PercentFormatter());
+            pieChart.setData(data);
+        }
         pieChart.getDescription().setEnabled(false);
         pieChart.invalidate();
     }
