@@ -10,6 +10,5 @@ public class RetrofitHelper {
 //                .baseUrl("http://192.168.219.104/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
     }
 }
