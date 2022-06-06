@@ -17,7 +17,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     private List<FriendData> listData = new ArrayList<>();
     private int custUid;
-    private OnItemClickListener itemClickListener;
 
     FriendAdapter(int cust_uid) {
         this.custUid = cust_uid;
@@ -33,7 +32,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     @Override
     public void onBindViewHolder(FriendViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.onBind(listData.get(position));
+        holder.onBind(listData.get(position), custUid);
     }
 
     @Override

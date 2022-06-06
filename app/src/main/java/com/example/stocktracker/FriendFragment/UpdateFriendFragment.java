@@ -142,6 +142,7 @@ public class UpdateFriendFragment extends Fragment {
                         for (Map map : data.getDatas()) {
                             FriendData itemData = new FriendData();
                             itemData.setNickname(map.get("nickname").toString());
+                            itemData.setFriend_uid(Integer.parseInt(map.get("friend_uid").toString()));
                             Log.d("TAG", map.get("nickname").toString());
                             adapter.addItem(itemData);
 
@@ -218,6 +219,7 @@ public class UpdateFriendFragment extends Fragment {
                     if ("000".equals(data.getResponse_cd())) {
                         FriendData friendData = new FriendData();
                         friendData.setNickname(nickname);
+                        friendData.setFriend_uid(Integer.parseInt(data.getDatas().get("uid").toString()));
                         adapter.addItem(friendData);
                         adapter.notifyItemInserted(adapter.getItemCount());
                     }
