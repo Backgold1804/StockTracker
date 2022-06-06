@@ -23,6 +23,7 @@ public class MainViewHolder extends RecyclerView.ViewHolder {
         homeProfit = view.findViewById(R.id.home_profit);
     }
 
+    //  값을 bind
     public void onBind(Data data) {
         DecimalFormat priceFormat = new DecimalFormat("###,###,###");
         DecimalFormat rateFormat = new DecimalFormat("##.##");

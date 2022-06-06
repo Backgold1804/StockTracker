@@ -33,6 +33,7 @@ public class LoginResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_result);
 
+        //  고객 uid와 nickname 가져오기
         Intent intent = getIntent();
         custUid = intent.getExtras().getInt("cust_uid");
         String nickname = intent.getExtras().getString("nickname");
@@ -65,10 +66,13 @@ public class LoginResultActivity extends AppCompatActivity {
 
     }
 
+    //  친구 Fragment에서 기본모드와 수정모드 전환
     public void friendFragmentChange(int index) {
         if (index == 1) {
+            //  수정모드 -> 기본모드
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new FriendFragment(custUid)).commit();
         } else {
+            //  기본모드 -> 수정모드
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new UpdateFriendFragment(custUid)).commit();
         }
     }

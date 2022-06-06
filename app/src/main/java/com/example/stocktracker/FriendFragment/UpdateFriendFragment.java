@@ -65,6 +65,7 @@ public class UpdateFriendFragment extends Fragment {
         imageButtonManage = (ImageButton) view.findViewById(R.id.manage_friend_button);
         imageButtonAdd = (ImageButton) view.findViewById(R.id.add_friend_button);
 
+        //  친구정보 Fragment로 이동하는 Listener
         imageButtonManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +73,7 @@ public class UpdateFriendFragment extends Fragment {
             }
         });
 
+        //  친구를 추가할 수 있는 Listener
         imageButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +81,7 @@ public class UpdateFriendFragment extends Fragment {
             }
         });
 
+        //  하단 toolbar
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -117,6 +120,7 @@ public class UpdateFriendFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    //  data를 가져오는 method
     private void getData() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -125,8 +129,10 @@ public class UpdateFriendFragment extends Fragment {
         call.enqueue(new Callback<ListData>() {
             @Override
             public void onResponse(Call<ListData> call, Response<ListData> response) {
+                //  통신했을 때
                 Log.d("retrofit", "Select Friend fetch success");
 
+                //  통신에 성공 했을 때
                 if (response.isSuccessful() && response.body() != null) {
                     ListData data = response.body();
 
@@ -153,6 +159,7 @@ public class UpdateFriendFragment extends Fragment {
         });
     }
 
+    //  친구를 추가하는 method
     private void addFriend() {
         EditText editTextAddFriend = new EditText(getContext());
         LinearLayout container = new LinearLayout(getContext());
@@ -189,6 +196,7 @@ public class UpdateFriendFragment extends Fragment {
         alert.show();
     }
 
+    //  친구를 추가하는 method
     private void addFriend(String nickname) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -197,20 +205,22 @@ public class UpdateFriendFragment extends Fragment {
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
+                //  통신 했을 때
                 Log.d("retrofit", "Add Friend fetch success");
 
+                //  통신에 성공 했을 때
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
 
                     Toast.makeText(getContext(), data.getResponse_msg(), Toast.LENGTH_LONG).show();
-
-                    FriendData friendData = new FriendData();
-                    friendData.setNickname(nickname);
-                    adapter.addItem(friendData);
-
-                    adapter.notifyItemInserted(adapter.getItemCount());
+                    if ("000".equals(data.getResponse_cd())) {
+                        FriendData friendData = new FriendData();
+                        friendData.setNickname(nickname);
+                        adapter.addItem(friendData);
+                        adapter.notifyItemInserted(adapter.getItemCount());
+                    }
                 }
             }
 
@@ -221,6 +231,7 @@ public class UpdateFriendFragment extends Fragment {
         });
     }
 
+    //  logout method
     private void logout() {
         PreferenceManager.clear(getContext());
 
@@ -229,12 +240,14 @@ public class UpdateFriendFragment extends Fragment {
         startActivity(intent);
     }
 
+    //  회원 정보 수정 method
     private void updateUser() {
         Intent intent = new Intent(getContext(), UpdateUserActivity.class);
         intent.putExtra("uid", custUid);
         startActivity(intent);
     }
 
+    //  회원 탈퇴 method
     private void deleteUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setTitle("알림");
@@ -253,6 +266,7 @@ public class UpdateFriendFragment extends Fragment {
         builder.show();
     }
 
+    //  회원 정보를 삭제하는 method
     private void deleteCust() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 

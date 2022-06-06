@@ -44,6 +44,7 @@ public class JoinActivity extends AppCompatActivity {
         editTextFindId = (EditText) findViewById(R.id.find_id_phrase);
         editTextNickname = (EditText) findViewById(R.id.nickname);
 
+        //  전화번호를 보기 좋게 만들기 위한 Listener
         editTextPhone.addTextChangedListener(new TextWatcher() {
 
             private int beforeLength = 0;
@@ -82,6 +83,7 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+        //  회원가입을 했을 때 처리해주는 Listener
         buttonJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,6 +96,7 @@ public class JoinActivity extends AppCompatActivity {
 
                 phone = phone.replace("-", "");
 
+                //  정보가 들어있는지 확인
                 if (id.trim().length() == 0 || password.trim().length() == 0 || passwordCheck.trim().length() == 0 || phone.trim().length() == 0 || findId.trim().length() == 0 || nickname.trim().length() == 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(JoinActivity.this);
                     builder.setTitle("알림")
@@ -102,6 +105,7 @@ public class JoinActivity extends AppCompatActivity {
                             .create()
                             .show();
                 } else {
+                    //  password와 passwordcheck가 동일한지 확인
                     if (password.equals(passwordCheck)) {
                         JoinResponse(id, password, phone, findId, nickname);
                     } else {
@@ -117,6 +121,7 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
 
+    //  회원가입을 처리하는 method
     public void JoinResponse(String id, String password, String phone, String findId, String nickname) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -125,8 +130,10 @@ public class JoinActivity extends AppCompatActivity {
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
+                //  통신을 했을 떄
                 Log.d("retrofit", "Join Data fetch success");
 
+                //  통신을 성공했을 때
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();
 

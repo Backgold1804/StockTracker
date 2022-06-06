@@ -1,10 +1,11 @@
 package com.example.stocktracker.TableFragment;
 
 public class ChartData {
-    String chart_stock_name;
-    int chart_current_price;
-    int chart_holdings;
-    float chart_profit_rate;
+    private String chart_stock_name;
+    private int chart_current_price;
+    private int chart_holdings;
+    private float chart_profit_rate;
+    private float chart_holding_weight;
 
     public String getChart_stock_name() {
         return chart_stock_name;
@@ -37,4 +38,13 @@ public class ChartData {
     public void setChart_profit_rate(float chart_profit_rate) {
         this.chart_profit_rate = chart_profit_rate;
     }
+
+    public float getChart_holding_weight() {
+        return chart_holding_weight;
+    }
+
+    public void setChart_holding_weight(float chart_holding_weight) {
+        this.chart_holding_weight = chart_holding_weight;
+    }
+
 }

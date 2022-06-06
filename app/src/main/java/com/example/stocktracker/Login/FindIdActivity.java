@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,6 +38,45 @@ public class FindIdActivity extends AppCompatActivity {
         editTextPhone = (EditText) findViewById(R.id.find_id_phone);
         editTextFindId = (EditText) findViewById(R.id.find_id_phrase);
 
+        //  휴대폰 번호를 보기 좋게 만들기 위한 Listener
+        editTextPhone.addTextChangedListener(new TextWatcher() {
+
+            private int beforeLength = 0;
+            private int afterLength = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                beforeLength = s.length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() <= 0) {
+                    return;
+                }
+
+                afterLength = s.length();
+
+                if (beforeLength > afterLength) {
+                    if (s.toString().endsWith("-")) {
+                        editTextPhone.setText(s.toString().substring(0, s.length() - 1));
+                    }
+                } else if (beforeLength < afterLength) {
+                    if (afterLength == 5 && s.toString().indexOf("-") < 0) {
+                        editTextPhone.setText(s.toString().subSequence(0, 3) + "-" + s.toString().substring(3, s.length()));
+                    } else if (afterLength == 10) {
+                        editTextPhone.setText(s.toString().subSequence(0, 8) + "-" + s.toString().substring(8, s.length()));
+                    }
+                }
+                editTextPhone.setSelection(editTextPhone.length());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         buttonFindId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,9 +85,12 @@ public class FindIdActivity extends AppCompatActivity {
         });
     }
 
+    //  ID를 찾기 위한 method
     public void findIdResponse() {
         String phone = editTextPhone.getText().toString();
         String findId = editTextFindId.getText().toString();
+
+        phone = phone.replace("-", "");
 
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -55,8 +99,10 @@ public class FindIdActivity extends AppCompatActivity {
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
+                //  통신을 했으면
                 Log.d("retrofit", "Find ID Data fetch success");
 
+                //  통신을 성공했으면
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();
 

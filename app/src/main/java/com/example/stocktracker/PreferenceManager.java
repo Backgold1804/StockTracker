@@ -10,6 +10,7 @@ public class PreferenceManager {
         return context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
     }
 
+    //  autoLogin 설정하기
     public static void setString(Context context, String key, String value) {
         SharedPreferences sp = getPreferences(context);
         SharedPreferences.Editor editor = sp.edit();
@@ -17,12 +18,14 @@ public class PreferenceManager {
         editor.commit();
     }
 
+    //  autoLogin 불러오기
     public static String getString(Context context, String key) {
         SharedPreferences sp = getPreferences(context);
         String value = sp.getString(key, "");
         return value;
     }
 
+    //  autoLogin 초기화
     public static void clear(Context context) {
         SharedPreferences sp = getPreferences(context);
         SharedPreferences.Editor editor = sp.edit();

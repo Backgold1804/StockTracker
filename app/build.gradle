@@ -52,3 +52,11 @@ dependencies {
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
+
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+        google()
+        jcenter()   //  Warning: this repository is going to shut down soon
+    }
+}

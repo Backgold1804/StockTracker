@@ -45,14 +45,18 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
         tableRow = view.findViewById(R.id._table_row);
     }
 
-    public void onBind(TradingItemData tradingItemData) {
+    //  주어진 자리에 값을 Bind
+    public void onBind(TradingItemData tradingItemData, int position) {
+        //  가격을 보다 쉽게 확인하기 위한 Format
         DecimalFormat priceFormat = new DecimalFormat("###,###,###");
+        //  매매 uid, 날짜, 매매, 주문가격, 주문수량의 text를 설정
         int trading_uid = tradingItemData.getMy_stock_uid();
         date.setText(tradingItemData.getDate());
         exchange.setText("B".equals(tradingItemData.getExchange()) ? "매수" : "매도");
         unitPrice.setText(priceFormat.format(tradingItemData.getOrder_price()));
         orderAmount.setText(priceFormat.format(tradingItemData.getOrder_amount()));
 
+        //  매매내역 삭제를 위한 Listener
         imageButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,8 +67,7 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteTrading(trading_uid);
-                                tableAdapter.getTableFragment().onResume(); // 갱신
+                                deleteTrading(trading_uid, position);
                             }
                         })
                         .create()
@@ -73,19 +76,25 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    private void deleteTrading(int trading_uid) {
+    //  매매내역을 지우기 위한 method
+    private void deleteTrading(int trading_uid, int position) {
+        //  서버와 통신하여 매매내역을 지움
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
         Call<Data> call = networkService.deleteTrading(trading_uid);
 
+        //  서버에서 매매내역을 지웠는지 확인
         call.enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
+                //  통신이 되었는지 확인
                 Log.d("retrofit", "Delete Trading fetch Success");
 
+                //  통신이 성공적으로 되었는지 확인
                 if (response.isSuccessful() && response.body() != null) {
                     Data data = response.body();
 
+                    //  data를 지웠는지 확인
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -94,6 +103,13 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
                             .setPositiveButton("확인", null)
                             .create()
                             .show();
+
+                    //  성공적으로 지웠으면 RecyclerView 갱신
+                    if ("000".equals(data.getResponse_cd())) {
+                        TradingAdpater adpater = (TradingAdpater) getBindingAdapter();
+                        adpater.deleteItem(position);
+                        adpater.notifyItemRemoved(position);
+                    }
                 }
             }
 

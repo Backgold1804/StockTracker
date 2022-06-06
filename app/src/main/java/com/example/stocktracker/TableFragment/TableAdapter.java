@@ -59,6 +59,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
 
         if (itemData.getData_list() == null) itemData.setData_list(addDataList(itemData.getMy_stock_uid()));
 
+        //  RecyclerView를 접었다 폈다 하기 위한 Listener
         holder.setOnViewHolderItemClickListener(new OnViewHolderItemClickListener() {
             @Override
             public void onViewHolderItemClick() {
@@ -87,12 +88,14 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
 
         adapter = new TradingAdpater(itemData.getData_list(), this);
 
+        //  구분선 추가
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(holder.recyclerView.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         recyclerView.setAdapter(adapter);
     }
 
+    //  매매내역을 불러오는 method
     private List<TradingItemData> addDataList(int my_stock_uid) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -103,13 +106,16 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         call.enqueue(new Callback<ListData>() {
             @Override
             public void onResponse(Call<ListData> call, Response<ListData> response) {
+                //  통신을 했을 때
                 Log.d("retrofit", "Find Trading List fetch success");
 
+                //  통신에 성공했을 때
                 if (response.isSuccessful() && response != null) {
                     ListData data = response.body();
 
                     Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
 
+                    //  매매내역을 추가
                     if ("000".equals(data.getResponse_cd())) {
                         for (Map map : data.getDatas()) {
                             TradingItemData itemData = new TradingItemData();
@@ -127,7 +133,6 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
 
             @Override
             public void onFailure(Call<ListData> call, Throwable t) {
-                Log.d("retrofit", "통신 실패");
                 t.printStackTrace();
             }
         });
@@ -144,11 +149,28 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         listData.add(tableItemData);
     }
 
+    void setItem(String trading, TradingItemData tradingItemData, int position) {
+        int temp_price = listData.get(position).getBlended_price() * listData.get(position).getHoldings();
+        int holdings = "B".equals(trading) ? listData.get(position).getHoldings() + tradingItemData.getOrder_amount() : listData.get(position).getHoldings() - tradingItemData.getOrder_amount();
+        int amount_price = holdings * listData.get(position).getCurrent_price();
+        int order_amount = tradingItemData.getOrder_amount() * tradingItemData.getOrder_price();
+        int blended_price = "B".equals(trading) ? (temp_price + order_amount) / holdings : listData.get(position).getBlended_price();
+        int profit = listData.get(position).getCurrent_price() - blended_price;
+        float profit_rate = (float) profit / blended_price * 100;
+
+        listData.get(position).setHoldings(holdings);
+        listData.get(position).setAmount_price(amount_price);
+        listData.get(position).setBlended_price(blended_price);
+        listData.get(position).setProfit(profit);
+        listData.get(position).setProfit_rate(profit_rate);
+    }
+
     public void clear() {
         listData.clear();
         prePosition = -1;
     }
 
+    //  총평가금액을 계산하는 method
     public String sumItem() {
         int sum = 0;
         DecimalFormat priceFormat = new DecimalFormat("###,###,###");
@@ -160,6 +182,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         return priceFormat.format(sum);
     }
 
+    //  수익을 계산하는 method
     public String getTotalProfit() {
         int profit = 0;
         int avg = 0;
@@ -176,6 +199,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         return priceFormat.format(profit);
     }
 
+    //  수익률을 계산하는 method
     public String getProfitRate() {
         float profitRate = 0;
         int avg = 0;
