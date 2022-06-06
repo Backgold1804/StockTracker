@@ -130,7 +130,8 @@ public class FriendFragment extends Fragment {
                         for (Map map : data.getDatas()) {
                             FriendData itemData = new FriendData();
                             itemData.setNickname(map.get("nickname").toString());
-                            Log.d("TAG", map.get("nickname").toString());
+                            itemData.setFriend_uid(Integer.parseInt(map.get("friend_uid").toString()));
+                            Log.d("TAG", map.get("nickname").toString() + "(" + map.get("friend_uid").toString() + ")");
                             adapter.addItem(itemData);
                         }
                         init();

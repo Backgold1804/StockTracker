@@ -84,9 +84,13 @@ public interface RetrofitService {
 
     //  친구 삭제
     @GET("/deleteFriend")
-    Call<Data> deleteFriend(@Query("uid") int uid, @Query("nickname") String nickname);
+    Call<Data> deleteFriend(@Query("uid") int uid, @Query("friend_uid") int friend_uid);
 
     //  매매내역 삭제
     @GET("/deleteTrading")
     Call<Data> deleteTrading(@Query("uid") int uid);
+
+    //  친구와 내 종목 불러오기
+    @GET("/selectFriendStockList")
+    Call<ListData> selectFriendStockList(@Query("uid") int uid);
 }

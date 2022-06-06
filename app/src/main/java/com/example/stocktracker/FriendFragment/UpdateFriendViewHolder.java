@@ -42,7 +42,7 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
         imageButtonRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nickname = data.getNickname();
+                int friendUid = data.getFriend_uid();
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle("알림")
                         .setMessage("삭제하시겠습니까?")
@@ -50,7 +50,7 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                deleteFriend(nickname, position);
+                                deleteFriend(friendUid, position);
                             }
                         })
                         .create()
@@ -60,10 +60,10 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
     }
 
     //  친구를 삭제하는 method
-    private void deleteFriend(String nickname, int position) {
+    private void deleteFriend(int friendUid, int position) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
-        Call<Data> call = networkService.deleteFriend(custUid, nickname);
+        Call<Data> call = networkService.deleteFriend(custUid, friendUid);
 
         call.enqueue(new Callback<Data>() {
             @Override
@@ -79,12 +79,9 @@ public class UpdateFriendViewHolder extends RecyclerView.ViewHolder {
 
                     Toast.makeText(view.getContext(), data.getResponse_msg(), Toast.LENGTH_LONG).show();
 
-                    FriendData friendData = new FriendData();
-                    friendData.setNickname(nickname);
-
                     UpdateFriendAdapter adapter = (UpdateFriendAdapter) getBindingAdapter();
                     adapter.deleteItem(position);
-                    adapter.notifyItemRemoved(position);
+                    adapter.notifyDataSetChanged();
                 }
             }
 

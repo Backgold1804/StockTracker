@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/my_chart"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent" />
+
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:id="@+id/friend_chart"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent" />
+
+    <Button
+        android:id="@+id/ok_btn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:backgroundTint="#AAF0D1"
+        android:text="확인" />
+
+</LinearLayout>
