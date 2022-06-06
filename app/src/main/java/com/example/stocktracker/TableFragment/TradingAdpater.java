@@ -17,7 +17,6 @@ import java.util.List;
 public class TradingAdpater extends RecyclerView.Adapter<TradingViewHolder> {
 
     private List<TradingItemData> listData = new ArrayList<>();
-    TableAdapter tableAdapter;
 
     TradingAdpater(List<TradingItemData> listData) {
         this.listData = listData;
