@@ -50,12 +50,14 @@ public class ChartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_chart, container, false);
-        getTestData();
-//        getData();
 
-        calcHoldingWeight();
+        getData();
 
-        PieChart pieChart = view.findViewById(R.id.PieChart);
+        return view;
+    }
+
+    private void drawPieChart() {
+        PieChart pieChart = view.findViewById(R.id.pieChart);
         pieChart.setUsePercentValues(true);
         pieChart.setEntryLabelColor(Color.BLACK);
         entries = new ArrayList<>();
@@ -69,9 +71,8 @@ public class ChartFragment extends Fragment {
         PieData data = new PieData(set);
         data.setValueFormatter(new PercentFormatter());
         pieChart.setData(data);
+        pieChart.getDescription().setEnabled(false);
         pieChart.invalidate();
-
-        return view;
     }
 
     // 보유 비중 계산
@@ -86,39 +87,17 @@ public class ChartFragment extends Fragment {
         }
     }
 
-    // Test Data
-    private void getTestData() {
-        ChartData temp = new ChartData();
-        temp.setChart_holdings(10);
-        temp.setChart_current_price(50000);
-        temp.setChart_stock_name("삼성전자");
-        temp.setChart_profit_rate(0.1f);
-        chartData.add(temp);
-        temp = new ChartData();
-        temp.setChart_holdings(5);
-        temp.setChart_current_price(30000);
-        temp.setChart_stock_name("LG전자");
-        temp.setChart_profit_rate(0.04f);
-        chartData.add(temp);
-        temp = new ChartData();
-        temp.setChart_holdings(7);
-        temp.setChart_current_price(83000);
-        temp.setChart_stock_name("카카오");
-        temp.setChart_profit_rate(0.08f);
-        chartData.add(temp);
-    }
-
     // Data 불러오기
     private void getData() {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
-        Call<ListData> call = networkService.selectStockList(custUid);
+        Call<ListData> call = networkService.selectChartList(custUid);
         Log.d("TAG", "" + custUid);
 
         call.enqueue(new Callback<ListData>() {
             @Override
             public void onResponse(Call<ListData> call, Response<ListData> response) {
-                Log.d("retrofit", "Find Stock List fetch success");
+                Log.d("retrofit", "Select Chart List fetch success");
 
                 if (response.isSuccessful() && response.body() != null) {
                     ListData data = response.body();
@@ -131,10 +110,13 @@ public class ChartFragment extends Fragment {
                             itemData.setChart_stock_name(map.get("stock_name").toString());
                             itemData.setChart_current_price(Integer.parseInt(map.get("close_price").toString()));
                             itemData.setChart_holdings(Integer.parseInt(map.get("holdings").toString()));
-                            itemData.setChart_profit_rate(Float.parseFloat(map.get("profit_rate").toString()));
                             Log.d("TAG", map.get("stock_name").toString());
                             chartData.add(itemData);
                         }
+
+                        calcHoldingWeight();
+
+                        drawPieChart();
                     }
                 }
             }
