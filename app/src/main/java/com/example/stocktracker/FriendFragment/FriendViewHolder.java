@@ -193,9 +193,9 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
                     //  개별 종목당 평가 금액을 ArrayList
                     ArrayList<Integer> stockPrices = new ArrayList<>();
                     for (Map<String, Object> map : stockList) {
-                        int stock = Integer.parseInt(map.get("close_price").toString()) * Integer.parseInt(map.get("holdings").toString());
-                        stockPrices.add(stock);
-                        sum += stock;
+                            int stock = Integer.parseInt(map.get("close_price").toString()) * Integer.parseInt(map.get("holdings").toString());
+                            stockPrices.add(stock);
+                            sum += stock;
                     }
 
                     ArrayList<Float> weightList = new ArrayList<Float>();
@@ -209,8 +209,8 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
                     ArrayList<String> nameList = new ArrayList<String>();
                     if (sum > 0) {
                         for (Map<String, Object> map : stockList) {
-                            Log.d("STOCK_LIST", map.get("stock_name").toString() + "(" + map.get("close_price").toString() + "원, " + map.get("holdings").toString() + "주)");
-                            nameList.add(map.get("stock_name").toString());
+                                Log.d("STOCK_LIST", map.get("stock_name").toString() + "(" + map.get("close_price").toString() + "원, " + map.get("holdings").toString() + "주)");
+                                nameList.add(map.get("stock_name").toString());
                         }
                     }
 
