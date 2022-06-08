@@ -94,7 +94,6 @@ public interface RetrofitService {
     @GET("/selectFriendStockList")
     Call<ListData> selectFriendStockList(@Query("uid") int uid);
 
-
     //  차트에 나타낼 종목들 불러오기
     @GET("/selectChartList")
     Call<ListData> selectChartList(@Query("cust_uid") int cust_uid);

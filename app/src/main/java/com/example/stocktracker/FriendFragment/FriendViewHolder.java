@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stocktracker.ListData;
@@ -15,10 +16,14 @@ import com.example.stocktracker.R;
 import com.example.stocktracker.RetrofitHelper;
 import com.example.stocktracker.RetrofitService;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,11 +61,13 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    //  Dialog를 그리는 method
     private void drawDialog(View v) {
         if(chartDialog == null) {
             chartDialog = new Dialog(v.getContext());
             chartDialog.setContentView(R.layout.dialog_friend_chart);
 
+            //  Dialog의 마진 설정
             WindowManager.LayoutParams params = chartDialog.getWindow().getAttributes();
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
 
@@ -77,40 +84,92 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    private void setChart(View v, int userUid, int size, BarEntry entry){
+    //  각 사람의 chart를 설정하는 method
+    private void setChart(View v, int userUid, int size, BarEntry entry, String[] name){
         HorizontalBarChart stackedChart;
         drawDialog(v);
-        if (custUid == userUid)
+        if (this.custUid == userUid)
             stackedChart = (HorizontalBarChart) chartDialog.findViewById(R.id.my_chart);
         else
             stackedChart = (HorizontalBarChart) chartDialog.findViewById(R.id.friend_chart);
 
+        //  비중을 나타내기 위하여 최소값을 0, 최대값을 1로 설정
         stackedChart.getAxisRight().setMinWidth(0.0f);
         stackedChart.getAxisRight().setMaxWidth(1.0f);
 
+        //  X축 숫자 제거
         XAxis xAxis = stackedChart.getXAxis();
         xAxis.setDrawAxisLine(false);
         xAxis.setDrawLabels(false);
+        xAxis.setDrawGridLines(false);
 
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setLabelCount(size, true);
+        //xAxis.setValueFormatter(new MyXAxisValueFormatter(size));
+        xAxis.setGranularity(1.0f);
 
+        //  Y축 오른쪽 숫자 제거
+        YAxis yAxisRight = stackedChart.getAxisRight();
+        yAxisRight.setDrawLabels(false);
+        yAxisRight.setDrawAxisLine(false);
+        yAxisRight.setDrawZeroLine(false);
 
+        //  Y축 왼쪽 숫자 제거
+        YAxis yAxisLeft = stackedChart.getAxisLeft();
+        yAxisLeft.setDrawLabels(false);
+        yAxisLeft.setDrawAxisLine(false);
+        yAxisLeft.setDrawZeroLine(false);
+
+//        stackedChart.setDescription(false);
+        Legend l = stackedChart.getLegend();
+        l.setEnabled(true);
+        l.setWordWrapEnabled(true);
+        l.setYEntrySpace(1.0f);
+        l.setXEntrySpace(10);
+        LegendEntry l1 = new LegendEntry("QTotalAvgList", Legend.LegendForm.LINE, 10f, 2f, null, Color.parseColor("#0000FF"));
+        LegendEntry l2 = new LegendEntry("QAmpTotalAvgList", Legend.LegendForm.LINE, 10f, 2f, null, Color.parseColor("#FF8000"));
+
+        stackedChart.setVisibility(View.VISIBLE);
+        stackedChart.animateXY(1000, 1000);
+        //  Lavel 제거
+        stackedChart.getDescription().setEnabled(false);
+        stackedChart.setExtraOffsets(-10, -10, -10, -10);
+        stackedChart.setDrawGridBackground(false);
+
+        //  줌 설정 막기
+        stackedChart.setPinchZoom(false);
+        //  터치 설정 막기
+        stackedChart.setTouchEnabled(false);
+        //  그림자 설정 제거
+        stackedChart.setDrawBarShadow(false);
+
+        //  비중을 stack 위에 적음
+        stackedChart.setDrawValueAboveBar(true);
+
+        //  매수한 종목이 없을 때 나타낼 text 설정
+        stackedChart.setNoDataText("보유중인 종목이 없습니다.");
+        stackedChart.setNoDataTextColor(Color.BLACK);
 
         ArrayList<BarEntry> dataList = new ArrayList<BarEntry>();
-        dataList.add(entry);
+        if (size > 0) {
+            dataList.add(entry);
 
-        stackedChart.setTouchEnabled(false);
+            //  친구 종목인지 자신의 종목인지 확인하여 chart data를 넣음
+            BarDataSet barDataSet;
+            if (custUid == userUid)
+                barDataSet = new BarDataSet(dataList, "내 종목 비중");
+            else
+                barDataSet = new BarDataSet(dataList, "친구 종목 비중");
+            barDataSet.setStackLabels(name);
+            barDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
-        BarDataSet barDataSet;
-        if (custUid == userUid)
-            barDataSet = new BarDataSet(dataList, "내 종목 비중");
-        else
-            barDataSet = new BarDataSet(dataList, "친구 종목 비중");
-        barDataSet.setColors(randomColor(size));
-
-        BarData barData = new BarData(barDataSet);
-        stackedChart.setData(barData);
+            BarData barData = new BarData(barDataSet);
+            stackedChart.setData(barData);
+        }
+        stackedChart.invalidate();
     }
 
+    //  data를 불러오는 method
     private void getData(int userUid, View v) {
         RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
 
@@ -130,10 +189,8 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
                     int sum = 0;
 
                     List<Map<String, Object>> stockList = data.getDatas();
-                    for (Map<String, Object> map : stockList) {
-                        Log.d("STOCK_LIST", map.get("stock_name").toString() + "(" + map.get("close_price").toString() + "원, " + map.get("holdings").toString() + "주)");
-                    }
 
+                    //  개별 종목당 평가 금액을 ArrayList
                     ArrayList<Integer> stockPrices = new ArrayList<>();
                     for (Map<String, Object> map : stockList) {
                         int stock = Integer.parseInt(map.get("close_price").toString()) * Integer.parseInt(map.get("holdings").toString());
@@ -149,12 +206,21 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
                         }
                     }
 
+                    ArrayList<String> nameList = new ArrayList<String>();
+                    if (sum > 0) {
+                        for (Map<String, Object> map : stockList) {
+                            Log.d("STOCK_LIST", map.get("stock_name").toString() + "(" + map.get("close_price").toString() + "원, " + map.get("holdings").toString() + "주)");
+                            nameList.add(map.get("stock_name").toString());
+                        }
+                    }
+
                     int mSize = weightList.size();
 
-                    float[] mArray = toFloatArray(weightList);
-                    BarEntry mEntry = new BarEntry(0, mArray);
+                    float[] mWeight = toFloatArray(weightList);
+                    String[] mName = toStringArray(nameList);
+                    BarEntry mEntry = new BarEntry(0, mWeight);
 
-                    setChart(v, userUid, mSize, mEntry);
+                    setChart(v, userUid, mSize, mEntry, mName);
                 }
             }
             @Override
@@ -164,16 +230,7 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    private int[] randomColor(int size) {
-        int[] colors = new int[size];
-        for (int i = 0; i < size; i++) {
-            Random random = new Random();
-            colors[i] = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
-        }
-        return colors;
-    }
-
-    public float[] toFloatArray(ArrayList<Float> arrayList) {
+    private float[] toFloatArray(ArrayList<Float> arrayList) {
         if (arrayList == null)
             return null;
 
@@ -184,6 +241,22 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
         float[] array = new float[size];
         for (int i = 0; i < size; i++) {
             array[i] = arrayList.get(i).floatValue();
+        }
+
+        return array;
+    }
+
+    private String[] toStringArray(ArrayList<String> arrayList) {
+        if (arrayList == null)
+            return null;
+
+        if (arrayList.size() == 0)
+            return new String[0];
+
+        final int size = arrayList.size();
+        String[] array = new String[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = arrayList.get(i);
         }
 
         return array;

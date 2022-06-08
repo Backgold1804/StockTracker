@@ -74,7 +74,6 @@ public class ChartFragment extends Fragment {
         pieChart.setEntryLabelColor(Color.BLACK);
         pieChart.getDescription().setEnabled(false);
         pieChart.setCenterText("보유비중(%)\n"+new DecimalFormat("총 ###,###,###원").format(sum));
-
         entries = new ArrayList<>();
 
         for (int i = 0; i < chartData.size(); i++) {
@@ -168,7 +167,6 @@ public class ChartFragment extends Fragment {
         for (int i = 0; i < chartData.size(); i++) {
             chartData.get(i).setChart_holding_weight((float) chartData.get(i).getChart_holdings() * chartData.get(i).getChart_current_price() / sum);
         }
-
         this.sum = sum;
     }
 
