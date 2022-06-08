@@ -32,9 +32,14 @@ public class ViewpagerFragmentAdapter extends FragmentStatePagerAdapter {
         }
     }
 
-
     @Override
     public int getCount() {
         return numberOfFragment;
+    }
+
+    // 차트를 갱신하기 위해
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }
