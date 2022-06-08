@@ -86,7 +86,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.recyclerView.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new TradingAdpater(itemData.getData_list());
+        adapter = new TradingAdpater(itemData.getData_list(), custUid);
 
         //  구분선 추가
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(holder.recyclerView.getContext(), layoutManager.getOrientation());
@@ -163,6 +163,25 @@ public class TableAdapter extends RecyclerView.Adapter<TableViewHolder> {
         listData.get(position).setBlended_price(blended_price);
         listData.get(position).setProfit(profit);
         listData.get(position).setProfit_rate(profit_rate);
+    }
+
+    void setRow(int myStockUid, int blended_price, int holdings) {
+        int position = 0;
+        for (TableItemData data : listData) {
+            if (data.getMy_stock_uid() == myStockUid)
+                break;
+            position++;
+        }
+        int mBlended_price = blended_price;
+        int mHoldings = holdings;
+        int profit = listData.get(position).getCurrent_price() - blended_price;
+        float profit_rate = (float) profit / blended_price * 100;
+
+        listData.get(position).setBlended_price(blended_price);
+        listData.get(position).setHoldings(holdings);
+        listData.get(position).setProfit(profit);
+        listData.get(position).setProfit_rate(profit_rate);
+        notifyItemChanged(position);
     }
 
     public void clear() {
