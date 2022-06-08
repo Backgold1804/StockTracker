@@ -97,4 +97,8 @@ public interface RetrofitService {
     //  차트에 나타낼 종목들 불러오기
     @GET("/selectChartList")
     Call<ListData> selectChartList(@Query("cust_uid") int cust_uid);
+
+    //  업데이트 된 종목 정보 불러오기
+    @GET("/selectUpdateStock")
+    Call<Data> selectUpdateStock(@Query("my_stock_uid") int my_stock_uid);
 }

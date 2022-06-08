@@ -17,16 +17,18 @@ import java.util.List;
 public class TradingAdpater extends RecyclerView.Adapter<TradingViewHolder> {
 
     private List<TradingItemData> listData = new ArrayList<>();
+    private int custUid;
 
-    TradingAdpater(List<TradingItemData> listData) {
+    TradingAdpater(List<TradingItemData> listData, int cust_uid) {
         this.listData = listData;
+        this.custUid = cust_uid;
     }
 
     @Override
     public TradingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tradingitem, parent, false);
 
-        return new TradingViewHolder(view);
+        return new TradingViewHolder(view, custUid);
     }
 
     @Override

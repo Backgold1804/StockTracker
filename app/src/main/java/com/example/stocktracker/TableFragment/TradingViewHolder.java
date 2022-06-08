@@ -27,12 +27,15 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
     TextView date, exchange, unitPrice, orderAmount;
     ImageButton imageButtonDelete;
     View view;
+    private int custUid;
 
     TableRow tableRow;
+    TableAdapter tableAdapter;
 
-    public TradingViewHolder(@NonNull View view) {
+    public TradingViewHolder(@NonNull View view, int cust_uid) {
         super(view);
         this.view = view;
+        this.custUid = cust_uid;
 
         date = view.findViewById(R.id._date);
         exchange = view.findViewById(R.id._exchange);
@@ -107,7 +110,41 @@ public class TradingViewHolder extends RecyclerView.ViewHolder {
                         TradingAdpater adpater = (TradingAdpater) getBindingAdapter();
                         adpater.deleteItem(position);
                         adpater.notifyItemRemoved(position);
+
+                        int myStockUid = Integer.parseInt(data.getDatas().get("my_stock_uid").toString().replace(".0", ""));
+//                        updateRow(myStockUid);
                     }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Data> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void updateRow(int myStockUid) {
+        RetrofitService networkService = RetrofitHelper.getRetrofit().create(RetrofitService.class);
+
+        Call<Data> call = networkService.selectUpdateStock(myStockUid);
+
+        call.enqueue(new Callback<Data>() {
+            @Override
+            public void onResponse(Call<Data> call, Response<Data> response) {
+                Log.d("retrofit", "Select Update Stock fetch Success");
+
+                if (response.isSuccessful() && response.body() != null) {
+                    Data data = response.body();
+
+                    Log.d("OnResponse", data.getResponse_cd() + ": " + data.getResponse_msg());
+
+//                    TableItemData tableItemData = new TableItemData();
+//
+//                    int blended_price = Integer.parseInt(data.getDatas().get("blended_price").toString());
+//                    int holdings = Integer.parseInt(data.getDatas().get("holdings").toString());
+//
+//                    tableAdapter.setRow(myStockUid, blended_price, holdings);
                 }
             }
 
