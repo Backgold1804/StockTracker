@@ -167,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
-                Log.d("OnResponse", "실패");
+                t.printStackTrace();
             }
         });
     }

@@ -142,10 +142,12 @@ public class MainFragment extends Fragment {
                             Data itemData = new Data();
                             itemData.setHome_stock_name(map.get("stock_name").toString());
                             itemData.setHome_amount_price(homeAmountPrice);
-                            itemData.setHome_holdings(Integer.parseInt(map.get("holdings").toString()));
-                            itemData.setHome_profit(Float.parseFloat(map.get("profit_rate").toString()));
-                            itemData.setHome_user_price(homeUserPrice);
-                            adapter.addItem(itemData);
+                            if (map.get("profit_rate") != null && map.get("holdings") != null && "0".equals(map.get("holdings").toString())){
+                                itemData.setHome_holdings(Integer.parseInt(map.get("holdings").toString()));
+                                itemData.setHome_profit(Float.parseFloat(map.get("profit_rate").toString()));
+                                itemData.setHome_user_price(homeUserPrice);
+                                adapter.addItem(itemData);
+                            }
                         }
 
                         TextView totalPrice = (TextView) view.findViewById(R.id.home_total_price);
