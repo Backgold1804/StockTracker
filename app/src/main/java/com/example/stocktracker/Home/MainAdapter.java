@@ -70,8 +70,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         DecimalFormat rateFormat = new DecimalFormat("##.##");
 
         for (int i = 0; i < listData.size(); i++) {
-            avg += listData.get(i).home_user_price;
-            cur += listData.get(i).home_amount_price;
+            avg += listData.get(i).home_user_price * listData.get(i).home_holdings;
+            cur += listData.get(i).home_amount_price * listData.get(i).home_holdings;
         }
 
         profitRate = (float) (cur - avg) / avg * 100;
