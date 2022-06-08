@@ -51,6 +51,7 @@ public class ChartFragment extends Fragment {
     private int custUid;
     private View view;
     private int sum;
+    private PieChart pieChart;
 
     private List<PieEntry> entries;
 
@@ -69,7 +70,7 @@ public class ChartFragment extends Fragment {
     }
 
     private void drawPieChart() {
-        PieChart pieChart = view.findViewById(R.id.PieChart);
+        pieChart = view.findViewById(R.id.PieChart);
         pieChart.setUsePercentValues(true);
         pieChart.setEntryLabelColor(Color.BLACK);
         pieChart.getDescription().setEnabled(false);
@@ -92,7 +93,7 @@ public class ChartFragment extends Fragment {
             legend.setDrawInside(false);
             legend.setEnabled(false);
 
-
+            // 차트 데이터 설정
             PieDataSet set = new PieDataSet(entries, "");
             set.setColors(ColorTemplate.JOYFUL_COLORS);
 
@@ -100,11 +101,13 @@ public class ChartFragment extends Fragment {
             set.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
             set.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
+            // 컬러 리스트 생성
             ArrayList<Integer> colors = new ArrayList<Integer>();
             for (int i = 0; i < ColorTemplate.JOYFUL_COLORS.length; i++) {
                 colors.add(ColorTemplate.JOYFUL_COLORS[i]);
             }
 
+            // 데이터 속성 설정
             PieData data = new PieData(set);
             data.setValueFormatter(new PercentFormatter());
             data.setValueTextSize(12f);
@@ -116,6 +119,7 @@ public class ChartFragment extends Fragment {
 
             initLegend();
         } else {
+            // 보유중인 종목이 없을 때
             pieChart.setNoDataText("보유중인 종목이 없습니다.");
             pieChart.setNoDataTextColor(Color.BLACK);
             pieChart.invalidate();
@@ -211,6 +215,7 @@ public class ChartFragment extends Fragment {
         });
     }
 
+    // Legend Recyclerview Setting
     public void initLegend() {
         RecyclerView recyclerView = view.findViewById(R.id.chart_recycler_view);
 

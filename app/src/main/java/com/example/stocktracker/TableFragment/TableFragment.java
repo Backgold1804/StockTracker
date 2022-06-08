@@ -134,12 +134,12 @@ public class TableFragment extends Fragment {
                         }
 
                         //  총금액과 수익률을 설정
-                        TextView totalamount = (TextView) view.findViewById(R.id.total_amount);
-                        TextView totalprofit = (TextView) view.findViewById(R.id.total_profit);
-                        TextView totalprofitrate = (TextView) view.findViewById(R.id.total_profit_rate);
-                        totalamount.setText("총평가금액 "+adapter.sumItem()+"원");
-                        totalprofit.setText("미실현손익 "+adapter.getTotalProfit()+"원");
-                        totalprofitrate.setText("총수익률 "+adapter.getProfitRate()+"%");
+//                        TextView totalamount = (TextView) view.findViewById(R.id.total_amount);
+//                        TextView totalprofit = (TextView) view.findViewById(R.id.total_profit);
+//                        TextView totalprofitrate = (TextView) view.findViewById(R.id.total_profit_rate);
+//                        totalamount.setText("총평가금액 "+adapter.sumItem()+"원");
+//                        totalprofit.setText("미실현손익 "+adapter.getTotalProfit()+"원");
+//                        totalprofitrate.setText("총수익률 "+adapter.getProfitRate()+"%");
 
                         init();
                     }
