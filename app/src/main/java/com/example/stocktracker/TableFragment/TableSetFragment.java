@@ -97,6 +97,8 @@ public class TableSetFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 tabCurrentIdx = tab.getPosition();
+                // 테이블의 변경에 따라 차트를 갱신하기 위해
+                viewpagerFragmentAdapter.notifyDataSetChanged();
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
@@ -479,4 +481,5 @@ public class TableSetFragment extends Fragment {
             }
         });
     }
+
 }

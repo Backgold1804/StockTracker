@@ -52,6 +52,8 @@ public class ChartFragment extends Fragment {
     private View view;
     private int sum;
     private PieChart pieChart;
+    private ChartAdapter adapter;
+
 
     private List<PieEntry> entries;
 
@@ -225,7 +227,7 @@ public class ChartFragment extends Fragment {
         //  종목에 구분을 위하여 구분선을 추가
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), linearLayoutManager.getOrientation());
 //        recyclerView.addItemDecoration(dividerItemDecoration);
-        ChartAdapter adapter = new ChartAdapter(chartData, ColorTemplate.JOYFUL_COLORS);
+        adapter = new ChartAdapter(chartData, ColorTemplate.JOYFUL_COLORS);
 
         recyclerView.setAdapter(adapter);
     }

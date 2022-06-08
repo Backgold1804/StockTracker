@@ -126,22 +126,20 @@ public class TableFragment extends Fragment {
                             itemData.setTicker(map.get("ticker").toString());
                             itemData.setCurrent_price(Integer.parseInt(map.get("close_price").toString()));
                             itemData.setBlended_price(Integer.parseInt(map.get("blended_price").toString()));
-                            if (map.get("profit_rate") != null && map.get("holdings") != null && "0".equals(map.get("holdings").toString())) {
-                                itemData.setHoldings(Integer.parseInt(map.get("holdings").toString()));
-                                itemData.setProfit(Integer.parseInt(map.get("profit").toString()));
-                                itemData.setProfit_rate(Float.parseFloat(map.get("profit_rate").toString()));
-                                Log.d("TAG", map.get("stock_name").toString());
-                                adapter.addItem(itemData);
-                            }
+                            itemData.setHoldings(Integer.parseInt(map.get("holdings").toString()));
+                            itemData.setProfit(Integer.parseInt(map.get("profit").toString()));
+                            itemData.setProfit_rate(Float.parseFloat(map.get("profit_rate").toString()));
+                            Log.d("TAG", map.get("stock_name").toString());
+                            adapter.addItem(itemData);
                         }
 
                         //  총금액과 수익률을 설정
-//                        TextView totalamount = (TextView) view.findViewById(R.id.total_amount);
-//                        TextView totalprofit = (TextView) view.findViewById(R.id.total_profit);
-//                        TextView totalprofitrate = (TextView) view.findViewById(R.id.total_profit_rate);
-//                        totalamount.setText("총평가금액 "+adapter.sumItem()+"원");
-//                        totalprofit.setText("미실현손익 "+adapter.getTotalProfit()+"원");
-//                        totalprofitrate.setText("총수익률 "+adapter.getProfitRate()+"%");
+                        TextView totalamount = (TextView) view.findViewById(R.id.total_amount);
+                        TextView totalprofit = (TextView) view.findViewById(R.id.total_profit);
+                        TextView totalprofitrate = (TextView) view.findViewById(R.id.total_profit_rate);
+                        totalamount.setText("총평가금액 "+adapter.sumItem()+"원");
+                        totalprofit.setText("미실현손익 "+adapter.getTotalProfit()+"원");
+                        totalprofitrate.setText("총수익률 "+adapter.getProfitRate()+"%");
 
                         init();
                     }
